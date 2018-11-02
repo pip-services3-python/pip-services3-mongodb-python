@@ -5,7 +5,7 @@
 
     MongoDbConnectionResolver implementation
 
-    :copyright: Conceptual Vision Consulting LLC 2015-2016, see AUTHORS for more details.
+    :copyright: Conceptual Vision Consulting LLC 2018-2019, see AUTHORS for more details.
     :license: MIT, see LICENSE for more details.
 """
 from pip_services_commons.config import IConfigurable, ConfigParams
@@ -16,16 +16,48 @@ from pip_services_components.connect import ConnectionResolver
 
 
 class MongoDbConnectionResolver(IReferenceable, IConfigurable):
+    """
+    Helper class that resolves MongoDB connection and credential parameters,
+    validates them and generates a connection URI.
+
+    It is able to process multiple connections to MongoDB cluster nodes.
+
+    ### Configuration parameters ###
+
+        - connection(s):
+            - discovery_key:               (optional) a key to retrieve the connection from IDiscovery
+            - host:                        host name or IP address
+            - port:                        port number (default: 27017)
+            - database:                    database name
+            - uri:                         resource URI or connection string with all parameters in it
+        - credential(s):
+            - store_key:                   (optional) a key to retrieve the credentials from ICredentialStore
+            - username:                    user name
+            - password:                    user password
+
+    ### References ###
+
+        - *:discovery:*:*:1.0             (optional) IDiscovery services
+        - *:credential-store:*:*:1.0      (optional) Credential stores to resolve credentials
+    """
     _connection_resolver = ConnectionResolver()
     _credential_resolver = CredentialResolver()
 
-
-
     def configure(self, config):
+        """
+        Configures component by passing configuration parameters.
+
+        :param config: configuration parameters to be set.
+        """
         self._connection_resolver.configure(config)
         self._credential_resolver.configure(config)
 
     def set_references(self, references):
+        """
+        Sets references to dependent components.
+
+        :param references: references to locate the component dependencies.
+        """
         self._connection_resolver.set_references(references)
         self._credential_resolver.set_references(references)
 
@@ -120,6 +152,13 @@ class MongoDbConnectionResolver(IReferenceable, IConfigurable):
         return uri
 
     def resolve(self, correlation_id):
+        """
+        Resolves MongoDB connection URI from connection and credential parameters.
+
+        :param correlation_id: (optional) transaction id to trace execution through call chain.
+
+        :return: a resolved URI
+        """
         connections = self._connection_resolver.resolve_all(correlation_id)
         credential = self._credential_resolver.lookup(correlation_id)
 

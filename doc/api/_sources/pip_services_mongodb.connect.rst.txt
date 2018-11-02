@@ -1,0 +1,17 @@
+pip\_services\_mongodb.connect package
+======================================
+
+Submodules
+----------
+
+.. toctree::
+
+   pip_services_mongodb.connect.MongoDbConnectionResolver
+
+Module contents
+---------------
+
+.. automodule:: pip_services_mongodb.connect
+    :members:
+    :undoc-members:
+    :show-inheritance:

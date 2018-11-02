@@ -1,0 +1,18 @@
+pip\_services\_mongodb.persistence package
+==========================================
+
+Submodules
+----------
+
+.. toctree::
+
+   pip_services_mongodb.persistence.IdentifiableMongoDbPersistence
+   pip_services_mongodb.persistence.MongoDbPersistence
+
+Module contents
+---------------
+
+.. automodule:: pip_services_mongodb.persistence
+    :members:
+    :undoc-members:
+    :show-inheritance:
