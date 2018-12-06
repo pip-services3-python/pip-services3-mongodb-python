@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    pip_services_mongodb.persistence.IdentifiableMongoDbPersistence
+    pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     
     Identifiable MongoDb persistence implementation
@@ -12,12 +12,12 @@
 import random
 import pymongo
 
-from pip_services_commons.refer import IReferenceable
-from pip_services_commons.config import IReconfigurable
-from pip_services_commons.run import IOpenable, IClosable, ICleanable
-from pip_services_components.log import CompositeLogger
-from pip_services_commons.data import FilterParams, PagingParams, DataPage
-from pip_services_commons.data import AnyValueMap, IdGenerator
+from pip_services3_commons.refer import IReferenceable
+from pip_services3_commons.config import IReconfigurable
+from pip_services3_commons.run import IOpenable, IClosable, ICleanable
+from pip_services3_components.log import CompositeLogger
+from pip_services3_commons.data import FilterParams, PagingParams, DataPage
+from pip_services3_commons.data import AnyValueMap, IdGenerator
 
 from .MongoDbPersistence import MongoDbPersistence
 

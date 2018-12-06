@@ -3,7 +3,7 @@ Pip.Services Data
 ------------------
 
 Pip.Services is an open-source library of basic microservices.
-pip_services_mongodb provides MongoDb persistence components.
+pip_services3_mongodb provides MongoDb persistence components.
 
 Links
 `````
@@ -17,9 +17,9 @@ from setuptools import setup
 from setuptools import find_packages
 
 setup(
-    name='pip_services_mongodb',
+    name='pip_services3_mongodb',
     version='3.0.0',
-    url='http://github.com/pip-services-python/pip-services-mongodb-python',
+    url='http://github.com/pip-services3-python/pip-services3-mongodb-python',
     license='MIT',
     author='Conceptual Vision Consulting LLC',
     author_email='seroukhov@gmail.com',
@@ -30,7 +30,7 @@ setup(
     zip_safe=True,
     platforms='any',
     install_requires=[
-        'iso8601', 'PyYAML', 'pymongo', 'pip_services_commons', 'pip_services_components'
+        'iso8601', 'PyYAML', 'pymongo', 'pip_services3_commons', 'pip_services3_components'
     ],
     classifiers=[
         'Development Status :: 4 - Beta',

@@ -8,7 +8,7 @@
 """
 
 from .Dummy import Dummy
-from pip_services_commons.data import AnyValueMap
+from pip_services3_commons.data import AnyValueMap
 
 DUMMY1 = Dummy(None, 'Key 1', 'Content 1')
 DUMMY2 = Dummy(None, 'Key 2', 'Content 2')

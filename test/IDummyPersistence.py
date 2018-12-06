@@ -9,7 +9,7 @@
     :license: MIT, see LICENSE for more details.
 """
 
-from pip_services_data import IGetter, IWriter, IPartialUpdater
+from pip_services3_data import IGetter, IWriter, IPartialUpdater
 
 class IDummyPersistence(IGetter, IWriter, IPartialUpdater):
     pass

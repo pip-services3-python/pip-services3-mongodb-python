@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    pip_services_mongodb.persistence.MongoDbPersistence
+    pip_services3_mongodb.persistence.MongoDbPersistence
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     
     MongoDb persistence implementation
@@ -12,11 +12,11 @@
 import threading
 import pymongo
 
-from pip_services_commons.config import ConfigParams, IConfigurable
-from pip_services_commons.refer import IReferenceable
-from pip_services_commons.run import IOpenable, ICleanable
-from pip_services_components.log import CompositeLogger
-from pip_services_commons.errors import ConnectionException
+from pip_services3_commons.config import ConfigParams, IConfigurable
+from pip_services3_commons.refer import IReferenceable
+from pip_services3_commons.run import IOpenable, ICleanable
+from pip_services3_components.log import CompositeLogger
+from pip_services3_commons.errors import ConnectionException
 from ..connect.MongoDbConnectionResolver import MongoDbConnectionResolver
 
 class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):

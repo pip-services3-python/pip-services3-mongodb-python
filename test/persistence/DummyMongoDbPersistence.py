@@ -9,8 +9,8 @@
     :license: MIT, see LICENSE for more details.
 """
 
-from pip_services_commons.data import FilterParams
-from pip_services_mongodb.persistence import IdentifiableMongoDbPersistence
+from pip_services3_commons.data import FilterParams
+from pip_services3_mongodb.persistence import IdentifiableMongoDbPersistence
 from ..IDummyPersistence import IDummyPersistence
 
 class DummyMongoDbPersistence(IdentifiableMongoDbPersistence, IDummyPersistence):

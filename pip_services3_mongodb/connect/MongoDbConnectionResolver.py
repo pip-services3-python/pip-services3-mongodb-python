@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    pip_services_mongodb.connect.MongoDbConnectionResolver
+    pip_services3_mongodb.connect.MongoDbConnectionResolver
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     MongoDbConnectionResolver implementation
@@ -8,11 +8,11 @@
     :copyright: Conceptual Vision Consulting LLC 2018-2019, see AUTHORS for more details.
     :license: MIT, see LICENSE for more details.
 """
-from pip_services_commons.config import IConfigurable, ConfigParams
-from pip_services_commons.errors import ConfigException
-from pip_services_commons.refer import IReferenceable
-from pip_services_components.auth import CredentialResolver
-from pip_services_components.connect import ConnectionResolver
+from pip_services3_commons.config import IConfigurable, ConfigParams
+from pip_services3_commons.errors import ConfigException
+from pip_services3_commons.refer import IReferenceable
+from pip_services3_components.auth import CredentialResolver
+from pip_services3_components.connect import ConnectionResolver
 
 
 class MongoDbConnectionResolver(IReferenceable, IConfigurable):

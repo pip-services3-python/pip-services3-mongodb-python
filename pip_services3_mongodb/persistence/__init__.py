@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    pip_services_mongodb.persistence.__init__
+    pip_services3_mongodb.persistence.__init__
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     
     MongoDB module initialization
