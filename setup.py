@@ -1,5 +1,5 @@
 """
-Pip.Services Data
+Pip.Services Mongodb
 ------------------
 
 Pip.Services is an open-source library of basic microservices.
@@ -9,7 +9,7 @@ Links
 `````
 
 * `website <http://github.com/pip-services/pip-services>`_
-* `development version <http://github.com/pip-services-python/pip-services-mongodb-python>`
+* `development version <http://github.com/pip-services3-python/pip-services3-mongodb-python>`
 
 """
 
