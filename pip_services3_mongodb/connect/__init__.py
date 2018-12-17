@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
     pip_services3_mongodb.connect.__init__
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     
     MongoDbConnectionResolver module initialization
     
