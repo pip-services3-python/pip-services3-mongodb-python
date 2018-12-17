@@ -1,7 +1,0 @@
-pip\_services\_mongodb.connect.MongoDbConnectionResolver module
-===============================================================
-
-.. automodule:: pip_services_mongodb.connect.MongoDbConnectionResolver
-    :members:
-    :undoc-members:
-    :show-inheritance:

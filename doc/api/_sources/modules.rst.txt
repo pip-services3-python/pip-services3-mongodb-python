@@ -1,7 +1,0 @@
-pip_services_mongodb
-====================
-
-.. toctree::
-   :maxdepth: 4
-
-   pip_services_mongodb
