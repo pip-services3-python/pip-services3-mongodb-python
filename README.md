@@ -10,10 +10,10 @@ Functionality is divided into few packahes:
 
 Quick Links:
 
-* [Downloads](https://github.com/pip-services-python/pip-services-mongodb-python/blob/master/doc/Downloads.md)
-* [API Reference](http://htmlpreview.github.io/?https://github.com/pip-services-python/pip-services-mongodb-python/blob/master/doc/api/index.html)
-* [Building and Testing](https://github.com/pip-services-python/pip-services-mongodb-python/blob/master/doc/Development.md)
-* [Contributing](https://github.com/pip-services-python/pip-services-mongodb-python/blob/master/doc/Development.md/#contrib)
+* [Downloads](https://github.com/pip-services3-python/pip-services3-mongodb-python/blob/master/doc/Downloads.md)
+* [API Reference](https://pip-services3-mongodb-python.readthedocs.io/en/latest/index.html)
+* [Building and Testing](https://github.com/pip-services3-python/pip-services3-mongodb-python/blob/master/doc/Development.md)
+* [Contributing](https://github.com/pip-services3-python/pip-services3-mongodb-python/blob/master/doc/Development.md/#contrib)
 
 ## Acknowledgements
 
