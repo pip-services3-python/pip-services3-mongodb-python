@@ -3,7 +3,7 @@
     pip_services3_mongodb.connect.MongoDbConnectionResolver
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    MongoDbConnectionResolver implementation
+    MongoDbConnectionResolver implementation.
 
     :copyright: Conceptual Vision Consulting LLC 2018-2019, see AUTHORS for more details.
     :license: MIT, see LICENSE for more details.
@@ -17,12 +17,11 @@ from pip_services3_components.connect import ConnectionResolver
 
 class MongoDbConnectionResolver(IReferenceable, IConfigurable):
     """
+    MongoDbConnectionResolver implementation.
     Helper class that resolves MongoDB connection
-     and credential parameters, validates them
-     and generates a connection URI.
+    and credential parameters, validates them and generates a connection URI.
 
-    It is able to process multiple connections
-    to MongoDB cluster nodes.
+    It is able to process multiple connections to MongoDB cluster nodes.
 
     ### Configuration parameters ###
 
