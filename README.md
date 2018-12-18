@@ -11,7 +11,7 @@ Functionality is divided into few packahes:
 Quick Links:
 
 * [Downloads](https://github.com/pip-services3-python/pip-services3-mongodb-python/blob/master/doc/Downloads.md)
-* [API Reference](https://pip-services3-mongodb-python.readthedocs.io/en/latest/index.html)
+* [API Reference](https://pip-services3-python.github.io/pip-services3-mongodb-python/index.html)
 * [Building and Testing](https://github.com/pip-services3-python/pip-services3-mongodb-python/blob/master/doc/Development.md)
 * [Contributing](https://github.com/pip-services3-python/pip-services3-mongodb-python/blob/master/doc/Development.md/#contrib)
 
