@@ -88,7 +88,7 @@ and is based using Mongoose object relational mapping.</p>
 <p>This is the most basic persistence component that is only
 able to store data items of any type. Specific CRUD operations
 over the data items must be implemented in child classes by
-accessing &lt;code&gt;this._collection&lt;/code&gt; or &lt;code&gt;this._model&lt;/code&gt; properties.</p>
+accessing <i>self._collection</i> or <i>self._model</i> properties.</p>
 <p>### Configuration parameters ###</p>
 <blockquote>
 <div><ul class="simple">
@@ -96,7 +96,7 @@ accessing &lt;code&gt;this._collection&lt;/code&gt; or &lt;code&gt;this._model&l
 <li><dl class="first docutils">
 <dt>connection(s):</dt>
 <dd><ul class="first last">
-<li>discovery_key:             (optional) a key to retrieve the connection from IDiscovery</li>
+<li>discovery_key:             (optional) a key to retrieve the connection from <a href="https://pip-services3-python.github.io/pip-services3-components-python/pip_services3_components.connect.IDiscovery.html">IDiscovery</a></li>
 <li>host:                      host name or IP address</li>
 <li>port:                      port number (default: 27017)</li>
 <li>uri:                       resource URI or connection string with all parameters in it</li>
@@ -107,7 +107,7 @@ accessing &lt;code&gt;this._collection&lt;/code&gt; or &lt;code&gt;this._model&l
 <li><dl class="first docutils">
 <dt>credential(s):</dt>
 <dd><ul class="first last">
-<li>store_key:                 (optional) a key to retrieve the credentials from ICredentialStore</li>
+<li>store_key:                 (optional) a key to retrieve the credentials from <a href="https://pip-services3-python.github.io/pip-services3-components-python/pip_services3_components.auth.ICredentialStore.html">ICredentialStore</a></li>
 <li>username:                  (optional) user name</li>
 <li>password:                  (optional) user password</li>
 </ul>
@@ -132,9 +132,9 @@ accessing &lt;code&gt;this._collection&lt;/code&gt; or &lt;code&gt;this._model&l
 <p>### References ###</p>
 <blockquote>
 <div><ul class="simple">
-<li><em>:logger:</em>:<a href="#id1"><span class="problematic" id="id2">*</span></a>:1.0           (optional) ILogger components to pass log messages</li>
-<li><em>:discovery:</em>:<a href="#id3"><span class="problematic" id="id4">*</span></a>:1.0        (optional) IDiscovery services</li>
-<li><em>:credential-store:</em>:<a href="#id5"><span class="problematic" id="id6">*</span></a>:1.0 (optional) Credential stores to resolve credentials</li>
+<li><em>:logger:</em>:<a href="#id1"><span class="problematic" id="id2">*</span></a>:1.0           (optional) <a href="https://pip-services3-python.github.io/pip-services3-components-python/pip_services3_components.log.ILogger.html">ILogger</a> components to pass log messages</li>
+<li><em>:discovery:</em>:<a href="#id3"><span class="problematic" id="id4">*</span></a>:1.0        (optional) <a href="https://pip-services3-python.github.io/pip-services3-components-python/pip_services3_components.connect.IDiscovery.html">IDiscovery</a> services</li>
+<li><em>:credential-store:</em>:<a href="#id5"><span class="problematic" id="id6">*</span></a>:1.0 (optional) <a href="https://pip-services3-python.github.io/pip-services3-components-python/pip_services3_components.auth.ICredentialStore.html">Credential stores</a> to resolve credentials</li>
 </ul>
 </div></blockquote>
 <dl class="docutils">
@@ -148,15 +148,16 @@ accessing &lt;code&gt;this._collection&lt;/code&gt; or &lt;code&gt;this._model&l
 <dd>item =  self._collection.find_one({ ‘name’: name })
 return item</dd>
 <dt>def set(self, correlationId, item):</dt>
-<dd>item = self._collection.find_one_and_update(                     { ‘_id’: item.id }, { ‘$set’: item },                     return_document = pymongo.ReturnDocument.AFTER,                     upsert = True                     )</dd>
+<dd>item = self._collection.find_one_and_update(                     { ‘_id’: item.id }, { ‘$set’: item },                     
+  <p>return_document = pymongo.ReturnDocument.AFTER,                     upsert = True                     )</dd>
 </dl>
 </dd>
 </dl>
 <p>persistence = MyMongoDbPersistence()
-persistence.configure(ConfigParams.from_tuples(“host”, “localhost”, “port”, 27017))</p>
+<p>persistence.configure(ConfigParams.from_tuples(“host”, “localhost”, “port”, 27017))</p>
 <p>persitence.open(“123”)</p>
 <p>persistence.set(“123”, { name: “ABC” })
-item = persistence.get_by_name(“123”, “ABC”)</p>
+<p>item = persistence.get_by_name(“123”, “ABC”)</p>
 <p class="last">print item</p>
 </dd>
 </dl>
@@ -253,11 +254,11 @@ item = persistence.get_by_name(“123”, “ABC”)</p>
 <p>Abstract persistence component that stores data in MongoDB
 and implements a number of CRUD operations over data items with unique ids.
 The data items must implement IIdentifiable interface.</p>
-<p>In basic scenarios child classes shall only override [[getPageByFilter]],
-[[getListByFilter]] or [[deleteByFilter]] operations with specific filter function.
+<p>In basic scenarios child classes shall only override <i>getPageByFilter</i>,
+<i>getListByFilter</i> or <i>deleteByFilter</i> operations with specific filter function.
 All other operations can be used out of the box.</p>
 <p>In complex scenarios child classes can implement additional operations by
-accessing &lt;code&gt;this._collection&lt;/code&gt; and &lt;code&gt;this._model&lt;/code&gt; properties.</p>
+accessing <i>self._collection</i> and <i>self._model</i> properties.</p>
 <p>### Configuration parameters ###</p>
 <blockquote>
 <div><ul class="simple">
@@ -319,13 +320,13 @@ accessing &lt;code&gt;this._collection&lt;/code&gt; and &lt;code&gt;this._model&
 </dd>
 </dl>
 <p>persistence = MyMongoDbPersistence()
-persistence.configure(ConfigParams.from_tuples(“host”, “localhost”, “port”, 27017))</p>
+<p>persistence.configure(ConfigParams.from_tuples(“host”, “localhost”, “port”, 27017))</p>
 <p>persitence.open(“123”)
-persistence.create(“123”, { id: “1”, name: “ABC” })
-mydata = persistence.get_page_by_filter(“123”, FilterParams.from_tuples(“name”, “ABC”), None, None)</p>
+<p>persistence.create(“123”, { id: “1”, name: “ABC” })
+<p>mydata = persistence.get_page_by_filter(“123”, FilterParams.from_tuples(“name”, “ABC”), None, None)</p>
 <p>print mydata</p>
 <p class="last">persistence.delete_by_id(“123”, “1”)
-…</p>
+<p>…</p>
 </dd>
 </dl>
 <dl class="method">
