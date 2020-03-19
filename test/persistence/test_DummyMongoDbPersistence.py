@@ -15,14 +15,8 @@ from pip_services3_components.config import YamlConfigReader
 from .DummyMongoDbPersistence import DummyMongoDbPersistence
 from ..DummyPersistenceFixture import DummyPersistenceFixture
 
-# config = YamlConfigReader.read_config(None, './config/test_connections.yaml')
-# db_config = config.get_section('persistence')
-#
-# test_enabled = False
 
-#@pytest.mark.skipif(not test_enabled, reason='MongoDB persistence is not configured')
 class TestDummyMongoDbPersistence:
-
     persistence = None
     fixture = None
 
@@ -43,8 +37,6 @@ class TestDummyMongoDbPersistence:
         cls.persistence = DummyMongoDbPersistence()
         cls.fixture = DummyPersistenceFixture(cls.persistence)
 
-
-
         cls.persistence.configure(db_config)
         cls.persistence.open(None)
 
@@ -54,7 +46,7 @@ class TestDummyMongoDbPersistence:
 
     def setup_method(self, method):
         self.persistence.clear(None)
-    
+
     def test_crud_operations(self):
         self.fixture.test_crud_operations()
 

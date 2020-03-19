@@ -2,7 +2,7 @@
 """
     tests.DummyPersistenceFixture
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    
+
     :copyright: (c) Conceptual Vision Consulting LLC 2015-2016, see AUTHORS for more details.
     :license: MIT, see LICENSE for more details.
 """
@@ -13,8 +13,8 @@ from pip_services3_commons.data import AnyValueMap
 DUMMY1 = Dummy(None, 'Key 1', 'Content 1')
 DUMMY2 = Dummy(None, 'Key 2', 'Content 2')
 
+
 class DummyPersistenceFixture:
-    
     _persistence = None
 
     def __init__(self, persistence):
@@ -63,6 +63,12 @@ class DummyPersistenceFixture:
         assert dummy1['key'] == dummy['key']
         assert "Partually Updated Content 1" == dummy['content']
 
+        # Get the dummy by Id
+        result = self._persistence.get_one_by_id(None, dummy1['id'])
+        assert result is not None
+        assert result['id'] == dummy1['id']
+        assert result['key'] == result['key']
+
         # Delete the dummy
         self._persistence.delete_by_id(None, dummy1['id'])
 
@@ -70,21 +76,20 @@ class DummyPersistenceFixture:
         dummy = self._persistence.get_one_by_id(None, dummy1['id'])
         assert dummy == None
 
-
     def test_batch_operations(self):
         # Create dummies
         dummy1 = self._persistence.create(None, DUMMY1)
         dummy2 = self._persistence.create(None, DUMMY2)
 
         # Get dummies
-        dummies = self._persistence.get_list_by_ids(None, [ dummy1['id'], dummy2['id'] ])
+        dummies = self._persistence.get_list_by_ids(None, [dummy1['id'], dummy2['id']])
         assert dummies != None
         assert 2 == len(dummies)
 
         # Delete
-        self._persistence.delete_by_ids(None, [ dummy1['id'], dummy2['id'] ])
+        self._persistence.delete_by_ids(None, [dummy1['id'], dummy2['id']])
 
         # Try to get deleted dummies
-        dummies = self._persistence.get_list_by_ids(None, [ dummy1['id'], dummy2['id'] ])
+        dummies = self._persistence.get_list_by_ids(None, [dummy1['id'], dummy2['id']])
         assert dummies != None
         assert 0 == len(dummies)
