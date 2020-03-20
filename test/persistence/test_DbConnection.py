@@ -1,11 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-    tests.persistence.test_DummyMongoDbPersistence
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    
-    :copyright: (c) Conceptual Vision Consulting LLC 2015-2016, see AUTHORS for more details.
-    :license: MIT, see LICENSE for more details.
-"""
 
 import pytest
 import os
@@ -14,11 +7,14 @@ from pip_services3_commons.config import ConfigParams
 from pip_services3_components.config import YamlConfigReader
 from .DummyMongoDbPersistence import DummyMongoDbPersistence
 from ..DummyPersistenceFixture import DummyPersistenceFixture
+from pip_services3_mongodb.persistence.MongoDbConnection import MongoDbConnection
 
 
-class TestDummyMongoDbPersistence:
+class TestDbConnection:
     persistence = None
     fixture = None
+
+    connection = None
 
     mongoUri = os.getenv('MONGO_URI')
     mongoHost = os.getenv('MONGO_HOST') if os.getenv('MONGO_HOST') != None else 'localhost'
@@ -27,28 +23,22 @@ class TestDummyMongoDbPersistence:
 
     @classmethod
     def setup_class(cls):
-        if cls.mongoUri == None and cls.mongoHost == None:
+        if cls.mongoUri is None and cls.mongoHost is None:
             return
 
         db_config = ConfigParams.from_tuples('connection.uri', cls.mongoUri,
                                              'connection.host', cls.mongoHost,
                                              'connection.port', cls.mongoPort,
                                              'connection.database', cls.mongoDatabase)
-        cls.persistence = DummyMongoDbPersistence()
-        cls.fixture = DummyPersistenceFixture(cls.persistence)
-
-        cls.persistence.configure(db_config)
-        cls.persistence.open(None)
+        cls.connection = MongoDbConnection()
+        cls.connection.configure(db_config)
+        cls.connection.open(None)
 
     @classmethod
     def teardown_class(cls):
-        cls.persistence.close(None)
+        cls.connection.close(None)
 
-    def setup_method(self, method):
-        self.persistence.clear(None)
-
-    def test_crud_operations(self):
-        self.fixture.test_crud_operations()
-
-    def test_batch_operations(self):
-        self.fixture.test_batch_operations()
+    def test_open_and_close(self):
+        assert hasattr(self.connection.get_connection(), '__iter__')
+        assert hasattr(self.connection.get_database(), '__iter__')
+        assert type(self.connection.get_database_name()) == str
