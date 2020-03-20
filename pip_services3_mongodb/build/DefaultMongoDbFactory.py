@@ -10,6 +10,7 @@ from pip_services3_commons.refer.Descriptor import Descriptor
 
 from ..persistence.MongoDbConnection import MongoDbConnection
 
+
 class DefaultMongoDbFactory(Factory):
     __descriptor = Descriptor("pip-services", "factory", "rpc", "default", "1.0")
     __mongo_db_connection_descriptor = Descriptor("pip-services", "connection", "mongodb", "*", "1.0")

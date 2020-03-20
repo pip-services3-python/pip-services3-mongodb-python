@@ -19,6 +19,7 @@ from pip_services3_components.log import CompositeLogger
 from pip_services3_commons.errors import ConnectionException
 from ..connect.MongoDbConnectionResolver import MongoDbConnectionResolver
 
+
 class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
     """
     Abstract persistence component that stores data in MongoDB
@@ -109,7 +110,7 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
     _collection = None
     _client = None
 
-    def __init__(self, collection = None):
+    def __init__(self, collection=None):
         """
         Creates a new instance of the persistence component.
 
@@ -157,7 +158,6 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
         value.pop('_id', None)
         return value
 
-
     def _convert_from_public(self, value):
         """
         Convert object value from public to internal format.
@@ -167,7 +167,6 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
         :return: converted object in internal format.
         """
         return value
-
 
     def is_opened(self):
         """
@@ -196,13 +195,14 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
         self._logger.debug(correlation_id, "Connecting to mongodb database ")
 
         try:
-            kwargs = { 
-                'maxPoolSize': max_pool_size, 
-                'connectTimeoutMS': connect_timeout, 
+            kwargs = {
+                'maxPoolSize': max_pool_size,
+                'connectTimeoutMS': connect_timeout,
                 'socketKeepAlive': keep_alive,
                 'socketTimeoutMS': socket_timeout,
                 'appname': correlation_id
             }
+            kwargs = self.__del_none_objects(kwargs)
             self._client = pymongo.MongoClient(uri, **kwargs)
 
             self._database = self._client.get_database()
@@ -213,6 +213,12 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
             raise ConnectionException(correlation_id, "CONNECT_FAILED", "Connection to mongodb failed") \
                 .with_cause(ex)
 
+    def __del_none_objects(self, settings):
+        new_settings = {}
+        for k in settings.keys():
+            if settings[k] is not None:
+                new_settings[k] = settings[k]
+        return new_settings
 
     def close(self, correlation_id):
         """
@@ -232,7 +238,6 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
         except Exception as ex:
             raise ConnectionException(None, 'DISCONNECT_FAILED', 'Disconnect from mongodb failed: ' + str(ex)) \
                 .with_cause(ex)
-
 
     def clear(self, correlation_id):
         """

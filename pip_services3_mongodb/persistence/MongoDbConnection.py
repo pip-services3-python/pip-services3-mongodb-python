@@ -113,7 +113,7 @@ class MongoDbConnection(IReferenceable, IReferences, IOpenable):
 
     def __compose_settings(self):
         max_pool_size = self._options.get_as_nullable_string('max_pool_size')
-        keep_alive = self._options.get_as_nullable_boolean('keep_alive')
+        keep_alive = self._options.get_as_boolean('keep_alive')
         connection_timeout_ms = self._options.get_as_nullable_integer('connect_timeout')
         socket_timeout_ms = self._options.get_as_nullable_integer('socket_timeout')
         auto_reconnect = self._options.get_as_nullable_boolean('auto_reconnect')
@@ -163,12 +163,21 @@ class MongoDbConnection(IReferenceable, IReferences, IOpenable):
             settings['appname'] = correlation_id
 
             uri = self._connection_resolver.resolve(correlation_id)
+            settings = self.__del_none_objects(settings)
             client = pymongo.MongoClient(uri, **settings)
             self._connection = client
             self._db = client.get_database()
             self._database_name = self._db.name
         except Exception as ex:
             raise ConnectionException(correlation_id, 'CONNECT_FAILED', 'Connection to mongodb failed').with_cause(ex)
+
+    def __del_none_objects(self, settings):
+        new_settings = {}
+        for k in settings.keys():
+            if settings[k] is not None:
+                new_settings[k] = settings[k]
+        return new_settings
+
 
     def close(self, correlation_id):
         """
