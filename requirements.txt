@@ -1,5 +1,11 @@
 iso8601
 PyYAML
+pystache
 pytest
-#Sphinx
+numpy
+pytz
 pymongo
+
+pip_services3_commons
+pip_services3_components
+pip_services3_data

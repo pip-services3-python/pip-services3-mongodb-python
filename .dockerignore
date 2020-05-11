@@ -1,0 +1,11 @@
+/.vscode
+/.git
+/.gitignore
+/.dockerignore
+/doc
+/pip-services3-mongodb.egg-info
+/dist
+/Dockerfile*
+/docker-compose*.yml
+/*.sh
+/*.ps1
