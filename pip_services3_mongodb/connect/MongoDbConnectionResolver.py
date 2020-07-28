@@ -123,15 +123,15 @@ class MongoDbConnectionResolver(IReferenceable, IConfigurable):
         options = ConfigParams()
         for connection in connections:
             options = options.override(connection)
-        if credential != None:
+        if not (credential is None):
             options = options.override(credential)
 
         options.remove("uri")
         options.remove("host")
         options.remove("port")
         options.remove("database")
-        # options.remove("username")
-        # options.remove("password")
+        options.remove("username")
+        options.remove("password")
 
         parameters = ''
         keys = options.get_key_names()

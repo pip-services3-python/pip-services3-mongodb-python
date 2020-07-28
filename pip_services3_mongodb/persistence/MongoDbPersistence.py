@@ -17,8 +17,12 @@ from pip_services3_commons.refer import IReferenceable
 from pip_services3_commons.run import IOpenable, ICleanable
 from pip_services3_components.log import CompositeLogger
 from pip_services3_commons.errors import ConnectionException
+from pip_services3_commons.config import ConfigParams
+from pip_services3_commons.data import FilterParams, PagingParams, DataPage
 from ..connect.MongoDbConnectionResolver import MongoDbConnectionResolver
 
+
+filtered = filter
 
 class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
     """
@@ -110,6 +114,8 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
     _collection = None
     _client = None
 
+    _max_page_size = 100
+
     def __init__(self, collection=None):
         """
         Creates a new instance of the persistence component.
@@ -132,9 +138,10 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
         config = config.set_defaults(self._default_config)
         self._logger.configure(config)
         self._connection_resolver.configure(config)
-
+        self._max_page_size = config.get_as_integer_with_default("options.max_page_size", self._max_page_size)
         self._collection_name = config.get_as_string_with_default('collection', self._collection_name)
         self._options = self._options.override(config.get_section('options'))
+        
 
     def set_references(self, references):
         """
@@ -249,3 +256,151 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
             raise Exception("Collection name is not defined")
 
         self._database.drop_collection(self._collection_name)
+ 
+
+    def create(self, correlation_id, item):
+        """
+        Creates a data item.
+
+        :param correlation_id: (optional) transaction id to trace execution through call chain.
+
+        :param item: an item to be created.
+
+        :return: a created item
+        """
+        item = self._convert_from_public(item)
+        new_item = dict(item)
+
+        result = self._collection.insert_one(new_item)
+        item = self._collection.find_one({ '_id': result.inserted_id })
+
+        item = self._convert_to_public(item)
+        return item
+
+
+    def delete_by_filter(self, correlation_id, filter):
+        """
+        Deletes data items that match to a given filter.
+
+        This method shall be called by a public deleteByFilter method from child class that
+        receives FilterParams and converts them into a filter function.
+
+        :param correlation_id: (optional) transaction id to trace execution through call chain.
+
+        :param filter: (optional) a filter function to filter items.
+        """
+        self._collection.remove(filter)
+
+
+    def get_one_random(self, correlation_id, filter):
+        """
+        Gets a random item from items that match to a given filter.
+
+        This method shall be called by a public getOneRandom method from child class
+        that receives FilterParams and converts them into a filter function.
+
+        :param correlation_id: (optional) transaction id to trace execution through call chain.
+
+        :return: a random item.
+        """
+        count = self._connection.find(filter).count()
+
+        pos = random.randint(0, count)
+
+        statement = self._connection.find(filter).skip(pos).limit(1)
+        for item in statement:
+            item = self._convert_to_public(item)
+            return item
+
+        return None
+
+
+    def get_page_by_filter(self, correlation_id, filter, paging, sort = None, select = None):
+        """
+        Gets a page of data items retrieved by a given filter and sorted according to sort parameters.
+
+        This method shall be called by a public getPageByFilter method from child class that
+        receives FilterParams and converts them into a filter function.
+
+        :param correlation_id: (optional) transaction id to trace execution through call chain.
+
+        :param filter: (optional) a filter JSON object
+
+        :param paging: (optional) paging parameters
+
+        :param sort: (optional) sorting JSON object
+
+        :param select: (optional) projection JSON object
+
+        :return: a data page of result by filter
+        """
+        # Adjust max item count based on configuration
+        paging = paging if paging != None else PagingParams()
+        skip = paging.get_skip(-1)
+        take = paging.get_take(self._max_page_size)
+
+        # Configure statement
+        statement = self._collection.find(filter)
+
+        if skip >= 0:
+            statement = statement.skip(skip)
+        statement = statement.limit(take)
+        if sort != None:
+            statement = statement.sort(sort)
+        if select != None:
+            statement = statement.select(select)
+
+        # Retrive page items
+        items = []
+        for item in statement:
+            item = self._convert_to_public(item)
+            items.append(item)
+
+        # Calculate total if needed
+        total = None
+        if paging.total:
+            total = self._collection.find(filter).count()
+        
+        return DataPage(items, total)
+
+
+    def get_list_by_filter(self, correlation_id, filter, sort = None, select = None):
+        """
+        Gets a list of data items retrieved by a given filter and sorted according to sort parameters.
+
+        This method shall be called by a public getListByFilter method from child class that
+        receives FilterParams and converts them into a filter function.
+
+        :param correlation_id: (optional) transaction id to trace execution through call chain.
+
+        :param filter: (optional) a filter function to filter items
+
+        :param sort: (optional) sorting parameters
+
+        :param select: (optional) projection parameters (not used yet)
+
+        :return: a data list of results by filter.
+        """
+        # Configure statement
+        statement = self._collection.find(filter)
+
+        if sort != None:
+            statement = statement.sort(sort)
+        if select != None:
+            statement = statement.select(select)
+
+        # Retrive page items
+        items = []
+        for item in statement:
+            item = self._convert_to_public(item)
+            items.append(item)
+
+        return items
+
+
+    def get_count_by_filter(self, correlation_id: str, filter) -> int:
+        count = self._connection.find(filter).count()
+
+        return count
+
+   

@@ -4,8 +4,8 @@
     "files.exclude": {
         "**/*.pyc": true
     },
-    "python.unitTest.pyTestEnabled": true,
-    "python.unitTest.pyTestArgs": [
+    "python.testing.pytestEnabled": true,
+    "python.testing.pytestArgs": [
         "--exitfirst",
         "--verbose"
     ],
