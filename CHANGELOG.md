@@ -1,5 +1,7 @@
 # MongoDb persistence components for Pip.Services in Python Changelog
 
+## <a name="3.0.3"></a> 3.0.3 (2020-08-01)
+
 ## <a name="3.0.0"></a> 3.0.0 (2018-10-30)
 
 ### New release
