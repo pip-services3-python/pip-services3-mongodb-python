@@ -64,7 +64,7 @@
 <em class="property">class </em><code class="descclassname">pip_services3_mongodb.persistence.MongoDbPersistence.</code><code class="descname">MongoDbPersistence</code><span class="sig-paren">(</span><em>collection=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbPersistence.MongoDbPersistence" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pip_services3_commons.refer.IReferenceable.IReferenceable</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">pip_services3_commons.config.IConfigurable.IConfigurable</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">pip_services3_commons.run.IOpenable.IOpenable</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">pip_services3_commons.run.ICleanable.ICleanable</span></code></p>
 <p>Abstract persistence component that stores data in MongoDB
-and is based using Mongoose object relational mapping.</p>
+using the official MongoDB driver.</p>
 <p>This is the most basic persistence component that is only
 able to store data items of any type. Specific CRUD operations
 over the data items must be implemented in child classes by
