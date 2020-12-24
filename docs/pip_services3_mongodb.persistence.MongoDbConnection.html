@@ -175,17 +175,13 @@
 <p>MongoDB connection using plain driver.</p>
 <p>By defining a connection and sharing it through multiple persistence components
 you can reduce number of used database connections.</p>
-<p>### Configuration parameters ###
-- connection(s):</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>discovery_key:             (optional) a key to retrieve the connection from <code class="xref py py-class docutils literal notranslate"><span class="pre">IDiscovery</span></code></p></li>
-<li><p>host:                      host name or IP address</p></li>
-<li><p>port:                      port number (default: 27017)</p></li>
-<li><p>uri:                       resource URI or connection string with all parameters in it</p></li>
-</ul>
-</div></blockquote>
-<ul class="simple">
+<dl class="simple">
+<dt>### Configuration parameters ###</dt><dd><ul class="simple">
+<li><p>connection(s):
+- discovery_key:             (optional) a key to retrieve the connection from <code class="xref py py-class docutils literal notranslate"><span class="pre">IDiscovery</span></code>
+- host:                      host name or IP address
+- port:                      port number (default: 27017)
+- uri:                       resource URI or connection string with all parameters in it</p></li>
 <li><p>credential(s):
 - store_key:                 (optional) a key to retrieve the credentials from <code class="xref py py-class docutils literal notranslate"><span class="pre">ICredentialStore</span></code>
 - username:                  (optional) user name
@@ -203,10 +199,14 @@ you can reduce number of used database connections.</p>
 - auth_source:               (optional) authentication source
 - debug:                     (optional) enable debug output (default: false).</p></li>
 </ul>
-<p>### References ###
-- &lt;code&gt;*:logger:*:*:1.0&lt;/code&gt;           (optional)  <code class="xref py py-class docutils literal notranslate"><span class="pre">ILogger</span></code> components to pass log messages
-- &lt;code&gt;*:discovery:*:*:1.0&lt;/code&gt;        (optional)  <code class="xref py py-class docutils literal notranslate"><span class="pre">IDiscovery</span></code> services
-- &lt;code&gt;*:credential-store:*:*:1.0&lt;/code&gt; (optional)  <code class="xref py py-class docutils literal notranslate"><span class="pre">Credential</span></code> stores to resolve credentials</p>
+</dd>
+<dt>### References ###</dt><dd><ul class="simple">
+<li><p><strong>*:logger:*:*:1.0</strong>           (optional)  <code class="xref py py-class docutils literal notranslate"><span class="pre">ILogger</span></code> components to pass log messages</p></li>
+<li><p><strong>*:discovery:*:*:1.0</strong>        (optional)  <code class="xref py py-class docutils literal notranslate"><span class="pre">IDiscovery</span></code> services</p></li>
+<li><p><strong>*:credential-store:*:*:1.0</strong> (optional)  <code class="xref py py-class docutils literal notranslate"><span class="pre">Credential</span></code> stores to resolve credentials</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt id="pip_services3_mongodb.persistence.MongoDbConnection.MongoDbConnection.close">
 <code class="sig-name descname">close</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbConnection.MongoDbConnection.close" title="Permalink to this definition">¶</a></dt>

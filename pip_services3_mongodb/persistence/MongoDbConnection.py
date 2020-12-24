@@ -19,32 +19,32 @@ class MongoDbConnection(IReferenceable, IReferences, IOpenable):
     you can reduce number of used database connections.
 
     ### Configuration parameters ###
-    - connection(s):
-      - discovery_key:             (optional) a key to retrieve the connection from :class:`IDiscovery`
-      - host:                      host name or IP address
-      - port:                      port number (default: 27017)
-      - uri:                       resource URI or connection string with all parameters in it
-    - credential(s):
-      - store_key:                 (optional) a key to retrieve the credentials from :class:`ICredentialStore`
-      - username:                  (optional) user name
-      - password:                  (optional) user password
-    - options:
-      - max_pool_size:             (optional) maximum connection pool size (default: 2)
-      - keep_alive:                (optional) enable connection keep alive (default: true)
-      - connect_timeout:           (optional) connection timeout in milliseconds (default: 5000)
-      - socket_timeout:            (optional) socket timeout in milliseconds (default: 360000)
-      - auto_reconnect:            (optional) enable auto reconnection (default: true)
-      - reconnect_interval:        (optional) reconnection interval in milliseconds (default: 1000)
-      - max_page_size:             (optional) maximum page size (default: 100)
-      - replica_set:               (optional) name of replica set
-      - ssl:                       (optional) enable SSL connection (default: false)
-      - auth_source:               (optional) authentication source
-      - debug:                     (optional) enable debug output (default: false).
+        - connection(s):
+          - discovery_key:             (optional) a key to retrieve the connection from :class:`IDiscovery`
+          - host:                      host name or IP address
+          - port:                      port number (default: 27017)
+          - uri:                       resource URI or connection string with all parameters in it
+        - credential(s):
+          - store_key:                 (optional) a key to retrieve the credentials from :class:`ICredentialStore`
+          - username:                  (optional) user name
+          - password:                  (optional) user password
+        - options:
+          - max_pool_size:             (optional) maximum connection pool size (default: 2)
+          - keep_alive:                (optional) enable connection keep alive (default: true)
+          - connect_timeout:           (optional) connection timeout in milliseconds (default: 5000)
+          - socket_timeout:            (optional) socket timeout in milliseconds (default: 360000)
+          - auto_reconnect:            (optional) enable auto reconnection (default: true)
+          - reconnect_interval:        (optional) reconnection interval in milliseconds (default: 1000)
+          - max_page_size:             (optional) maximum page size (default: 100)
+          - replica_set:               (optional) name of replica set
+          - ssl:                       (optional) enable SSL connection (default: false)
+          - auth_source:               (optional) authentication source
+          - debug:                     (optional) enable debug output (default: false).
 
     ### References ###
-    - <code>\*:logger:\*:\*:1.0</code>           (optional)  :class:`ILogger` components to pass log messages
-    - <code>\*:discovery:\*:\*:1.0</code>        (optional)  :class:`IDiscovery` services
-    - <code>\*:credential-store:\*:\*:1.0</code> (optional)  :class:`Credential` stores to resolve credentials
+        - **\*:logger:\*:\*:1.0**           (optional)  :class:`ILogger` components to pass log messages
+        - **\*:discovery:\*:\*:1.0**        (optional)  :class:`IDiscovery` services
+        - **\*:credential-store:\*:\*:1.0** (optional)  :class:`Credential` stores to resolve credentials
     """
 
     # The logger
