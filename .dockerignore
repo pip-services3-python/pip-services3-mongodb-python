@@ -2,10 +2,10 @@
 /.git
 /.gitignore
 /.dockerignore
-/doc
+/docs
 /pip-services3-mongodb.egg-info
 /dist
-/Dockerfile*
-/docker-compose*.yml
+/docker/Dockerfile*
+/docker/docker-compose*.yml
 /*.sh
 /*.ps1
