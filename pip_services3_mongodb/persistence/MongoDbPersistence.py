@@ -32,18 +32,17 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
     This is the most basic persistence component that is only
     able to store data items of any type. Specific CRUD operations
     over the data items must be implemented in child classes by
-    accessing <code>this._collection</code> or <code>this._model</code> properties.
+    accessing **self.__collection** or **self.__model** properties.
 
     ### Configuration parameters ###
-
         - collection:                  (optional) MongoDB collection name
         - connection(s):
-            - discovery_key:             (optional) a key to retrieve the connection from IDiscovery
+            - discovery_key:             (optional) a key to retrieve the connection from :class:`IDiscovery`
             - host:                      host name or IP address
             - port:                      port number (default: 27017)
             - uri:                       resource URI or connection string with all parameters in it
         - credential(s):
-            - store_key:                 (optional) a key to retrieve the credentials from ICredentialStore
+            - store_key:                 (optional) a key to retrieve the credentials from :class:`ICredentialStore`
             - username:                  (optional) user name
             - password:                  (optional) user password
         - options:
@@ -55,12 +54,14 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
             - debug:                     (optional) enable debug output (default: false).
 
     ### References ###
-
-        - *:logger:*:*:1.0           (optional) ILogger components to pass log messages
-        - *:discovery:*:*:1.0        (optional) IDiscovery services
-        - *:credential-store:*:*:1.0 (optional) Credential stores to resolve credentials
+        - *:logger:*:*:1.0           (optional) :class:`ILogger` components to pass log messages
+        - *:discovery:*:*:1.0        (optional) :class:`IDiscovery` services
+        - *:credential-store:*:*:1.0 (optional) :class:`Credential` stores to resolve credentials
 
     Example:
+
+    .. code-block:: python
+
         class MyMongoDbPersistence(MongoDbPersistence):
             def __init__(self):
                 super(MyMongoDbPersistence, self).__init__("mydata", MyData)
@@ -70,10 +71,10 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
                 return item
 
             def set(self, correlationId, item):
-                item = self._collection.find_one_and_update( \
-                    { '_id': item.id }, { '$set': item }, \
-                    return_document = pymongo.ReturnDocument.AFTER, \
-                    upsert = True \
+                item = self._collection.find_one_and_update( 
+                    { '_id': item.id }, { '$set': item }, 
+                    return_document = pymongo.ReturnDocument.AFTER, 
+                    upsert = True 
                     )
 
         persistence = MyMongoDbPersistence()
@@ -84,7 +85,7 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
         persistence.set("123", { name: "ABC" })
         item = persistence.get_by_name("123", "ABC")
 
-        print item
+        print (item)
     """
     _default_config = ConfigParams.from_tuples(
         "collection", None,
@@ -282,8 +283,8 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
         """
         Deletes data items that match to a given filter.
 
-        This method shall be called by a public deleteByFilter method from child class that
-        receives FilterParams and converts them into a filter function.
+        This method shall be called by a public :func:`delete_by_filter` method from child class that
+        receives :class:`FilterParams` and converts them into a filter function.
 
         :param correlation_id: (optional) transaction id to trace execution through call chain.
 
@@ -296,7 +297,7 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
         """
         Gets a random item from items that match to a given filter.
 
-        This method shall be called by a public getOneRandom method from child class
+        This method shall be called by a public get_one_random method from child class
         that receives FilterParams and converts them into a filter function.
 
         :param correlation_id: (optional) transaction id to trace execution through call chain.
@@ -319,7 +320,7 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
         """
         Gets a page of data items retrieved by a given filter and sorted according to sort parameters.
 
-        This method shall be called by a public getPageByFilter method from child class that
+        This method shall be called by a public get_page_by_filter method from child class that
         receives FilterParams and converts them into a filter function.
 
         :param correlation_id: (optional) transaction id to trace execution through call chain.
@@ -368,7 +369,7 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
         """
         Gets a list of data items retrieved by a given filter and sorted according to sort parameters.
 
-        This method shall be called by a public getListByFilter method from child class that
+        This method shall be called by a public get_list_by_filter method from child class that
         receives FilterParams and converts them into a filter function.
 
         :param correlation_id: (optional) transaction id to trace execution through call chain.

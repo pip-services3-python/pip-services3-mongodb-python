@@ -24,7 +24,6 @@ class MongoDbConnectionResolver(IReferenceable, IConfigurable):
     It is able to process multiple connections to MongoDB cluster nodes.
 
     ### Configuration parameters ###
-
         - connection(s):
             - discovery_key:               (optional) a key to retrieve the connection from IDiscovery
             - host:                        host name or IP address
@@ -38,8 +37,8 @@ class MongoDbConnectionResolver(IReferenceable, IConfigurable):
 
     ### References ###
 
-        - *:discovery:*:*:1.0             (optional) IDiscovery services
-        - *:credential-store:*:*:1.0      (optional) Credential stores to resolve credentials
+        - *:discovery:*:*:1.0             (optional) :class:`IDiscovery` services
+        - *:credential-store:*:*:1.0      (optional) :class:`Credential` stores to resolve credentials
     """
     _connection_resolver = ConnectionResolver()
     _credential_resolver = CredentialResolver()

@@ -26,15 +26,14 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
     and implements a number of CRUD operations over data items with unique ids.
     The data items must implement IIdentifiable interface.
 
-    In basic scenarios child classes shall only override [[getPageByFilter]],
-    [[getListByFilter]] or [[deleteByFilter]] operations with specific filter function.
+    In basic scenarios child classes shall only override :func:`get_page_by_filter`,
+    :func:`get_list_by_filter` or :func:`delete_by_filter` operations with specific filter function.
     All other operations can be used out of the box.
 
     In complex scenarios child classes can implement additional operations by
-    accessing <code>this._collection</code> and <code>this._model</code> properties.
+    accessing **self.__collection** and **self.__model** properties.
 
     ### Configuration parameters ###
-
         - collection:                  (optional) MongoDB collection name
         - connection(s):
             - discovery_key:             (optional) a key to retrieve the connection from IDiscovery
@@ -55,11 +54,14 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
 
     ### References ###
 
-        - *:logger:*:*:1.0           (optional) ILogger components to pass log messages components to pass log messages
-        - *:discovery:*:*:1.0        (optional) IDiscovery services
-        - *:credential-store:*:*:1.0 (optional) Credential stores to resolve credentials
+        - *:logger:*:*:1.0           (optional) :class:`ILogger` components to pass log messages components to pass log messages
+        - *:discovery:*:*:1.0        (optional) :class:`IDiscovery` services
+        - *:credential-store:*:*:1.0 (optional) :class:`Credential` stores to resolve credentials
 
     Example:
+
+    .. code-block:: python
+    
         class MyMongoDbPersistence(MongoDbPersistence):
             def __init__(self):
                 super(MyMongoDbPersistence, self).__init__("mydata", MyData)
@@ -77,7 +79,7 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
         print mydata
 
         persistence.delete_by_id("123", "1")
-        ...
+        # ...
     """
 
     def __init__(self, collection = None):

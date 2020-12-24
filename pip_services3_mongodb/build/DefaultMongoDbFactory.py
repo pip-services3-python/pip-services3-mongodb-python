@@ -12,10 +12,17 @@ from ..persistence.MongoDbConnection import MongoDbConnection
 
 
 class DefaultMongoDbFactory(Factory):
+    """
+    Creates MongoDb components by their descriptors.
+    See :class:`Factory`, :class:`MongoDbConnection`
+    """
     __descriptor = Descriptor("pip-services", "factory", "rpc", "default", "1.0")
     __mongo_db_connection_descriptor = Descriptor("pip-services", "connection", "mongodb", "*", "1.0")
 
     def __init__(self):
+        """
+        Create a new instance of the factory.
+        """
         super(DefaultMongoDbFactory, self).__init__()
         self.register_as_type(DefaultMongoDbFactory.mongo_db_connection_descriptor, MongoDbConnection)
 

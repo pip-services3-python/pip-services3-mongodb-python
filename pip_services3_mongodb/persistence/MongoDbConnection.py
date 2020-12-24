@@ -19,14 +19,13 @@ class MongoDbConnection(IReferenceable, IReferences, IOpenable):
     you can reduce number of used database connections.
 
     ### Configuration parameters ###
-
     - connection(s):
-      - discovery_key:             (optional) a key to retrieve the connection from [[https://rawgit.com/pip-services-python/pip-services3-components-python/master/doc/api/interfaces/connect.idiscovery.html IDiscovery]]
+      - discovery_key:             (optional) a key to retrieve the connection from :class:`IDiscovery`
       - host:                      host name or IP address
       - port:                      port number (default: 27017)
       - uri:                       resource URI or connection string with all parameters in it
     - credential(s):
-      - store_key:                 (optional) a key to retrieve the credentials from [[https://rawgit.com/pip-services-python/pip-services3-components-python/master/doc/api/interfaces/auth.icredentialstore.html ICredentialStore]]
+      - store_key:                 (optional) a key to retrieve the credentials from :class:`ICredentialStore`
       - username:                  (optional) user name
       - password:                  (optional) user password
     - options:
@@ -43,10 +42,9 @@ class MongoDbConnection(IReferenceable, IReferences, IOpenable):
       - debug:                     (optional) enable debug output (default: false).
 
     ### References ###
-
-    - <code>\*:logger:\*:\*:1.0</code>           (optional) [[https://rawgit.com/pip-services-python/pip-services3-components-python/master/doc/api/interfaces/log.ilogger.html ILogger]] components to pass log messages
-    - <code>\*:discovery:\*:\*:1.0</code>        (optional) [[https://rawgit.com/pip-services-python/pip-services3-components-python/master/doc/api/interfaces/connect.idiscovery.html IDiscovery]] services
-    - <code>\*:credential-store:\*:\*:1.0</code> (optional) Credential stores to resolve credentials
+    - <code>\*:logger:\*:\*:1.0</code>           (optional)  :class:`ILogger` components to pass log messages
+    - <code>\*:discovery:\*:\*:1.0</code>        (optional)  :class:`IDiscovery` services
+    - <code>\*:credential-store:\*:\*:1.0</code> (optional)  :class:`Credential` stores to resolve credentials
     """
 
     # The logger
