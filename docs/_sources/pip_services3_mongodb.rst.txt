@@ -5,14 +5,16 @@ Subpackages
 -----------
 
 .. toctree::
+   :maxdepth: 4
 
-    pip_services3_mongodb.connect
-    pip_services3_mongodb.persistence
+   pip_services3_mongodb.build
+   pip_services3_mongodb.connect
+   pip_services3_mongodb.persistence
 
 Module contents
 ---------------
 
 .. automodule:: pip_services3_mongodb
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:

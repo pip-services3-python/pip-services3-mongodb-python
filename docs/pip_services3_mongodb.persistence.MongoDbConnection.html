@@ -1,0 +1,346 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pip_services3_mongodb.persistence.MongoDbConnection module &mdash; pip-services3-mongodb  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="pip_services3_mongodb.persistence.MongoDbPersistence module" href="pip_services3_mongodb.persistence.MongoDbPersistence.html" />
+    <link rel="prev" title="pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence module" href="pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> pip-services3-mongodb
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">pip_services3_mongodb</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="pip_services3_mongodb.html">pip_services3_mongodb package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="pip_services3_mongodb.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="pip_services3_mongodb.build.html">pip_services3_mongodb.build package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pip_services3_mongodb.connect.html">pip_services3_mongodb.connect package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="pip_services3_mongodb.persistence.html">pip_services3_mongodb.persistence package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pip_services3_mongodb.html#module-pip_services3_mongodb">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pip-services3-mongodb</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="modules.html">pip_services3_mongodb</a> &raquo;</li>
+        
+          <li><a href="pip_services3_mongodb.html">pip_services3_mongodb package</a> &raquo;</li>
+        
+          <li><a href="pip_services3_mongodb.persistence.html">pip_services3_mongodb.persistence package</a> &raquo;</li>
+        
+      <li>pip_services3_mongodb.persistence.MongoDbConnection module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/pip_services3_mongodb.persistence.MongoDbConnection.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-pip_services3_mongodb.persistence.MongoDbConnection">
+<span id="pip-services3-mongodb-persistence-mongodbconnection-module"></span><h1>pip_services3_mongodb.persistence.MongoDbConnection module<a class="headerlink" href="#module-pip_services3_mongodb.persistence.MongoDbConnection" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="pip_services3_mongodb.persistence.MongoDbConnection.MongoDbConnection">
+<em class="property">class </em><code class="sig-prename descclassname">pip_services3_mongodb.persistence.MongoDbConnection.</code><code class="sig-name descname">MongoDbConnection</code><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbConnection.MongoDbConnection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pip_services3_commons.refer.IReferenceable.IReferenceable</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">pip_services3_commons.refer.IReferences.IReferences</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">pip_services3_commons.run.IOpenable.IOpenable</span></code></p>
+<p>MongoDB connection using plain driver.</p>
+<p>By defining a connection and sharing it through multiple persistence components
+you can reduce number of used database connections.</p>
+<p>### Configuration parameters ###
+- connection(s):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>discovery_key:             (optional) a key to retrieve the connection from <code class="xref py py-class docutils literal notranslate"><span class="pre">IDiscovery</span></code></p></li>
+<li><p>host:                      host name or IP address</p></li>
+<li><p>port:                      port number (default: 27017)</p></li>
+<li><p>uri:                       resource URI or connection string with all parameters in it</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>credential(s):
+- store_key:                 (optional) a key to retrieve the credentials from <code class="xref py py-class docutils literal notranslate"><span class="pre">ICredentialStore</span></code>
+- username:                  (optional) user name
+- password:                  (optional) user password</p></li>
+<li><p>options:
+- max_pool_size:             (optional) maximum connection pool size (default: 2)
+- keep_alive:                (optional) enable connection keep alive (default: true)
+- connect_timeout:           (optional) connection timeout in milliseconds (default: 5000)
+- socket_timeout:            (optional) socket timeout in milliseconds (default: 360000)
+- auto_reconnect:            (optional) enable auto reconnection (default: true)
+- reconnect_interval:        (optional) reconnection interval in milliseconds (default: 1000)
+- max_page_size:             (optional) maximum page size (default: 100)
+- replica_set:               (optional) name of replica set
+- ssl:                       (optional) enable SSL connection (default: false)
+- auth_source:               (optional) authentication source
+- debug:                     (optional) enable debug output (default: false).</p></li>
+</ul>
+<p>### References ###
+- &lt;code&gt;*:logger:*:*:1.0&lt;/code&gt;           (optional)  <code class="xref py py-class docutils literal notranslate"><span class="pre">ILogger</span></code> components to pass log messages
+- &lt;code&gt;*:discovery:*:*:1.0&lt;/code&gt;        (optional)  <code class="xref py py-class docutils literal notranslate"><span class="pre">IDiscovery</span></code> services
+- &lt;code&gt;*:credential-store:*:*:1.0&lt;/code&gt; (optional)  <code class="xref py py-class docutils literal notranslate"><span class="pre">Credential</span></code> stores to resolve credentials</p>
+<dl class="py method">
+<dt id="pip_services3_mongodb.persistence.MongoDbConnection.MongoDbConnection.close">
+<code class="sig-name descname">close</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbConnection.MongoDbConnection.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes component and frees used resources.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>correlation_id</strong> – (optional) transaction id to trace execution through call chain.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>callback function that receives error or null no errors occured.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pip_services3_mongodb.persistence.MongoDbConnection.MongoDbConnection.configure">
+<code class="sig-name descname">configure</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">config</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbConnection.MongoDbConnection.configure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configures component by passing configuration parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> – configuration parameters to be set.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pip_services3_mongodb.persistence.MongoDbConnection.MongoDbConnection.get_connection">
+<code class="sig-name descname">get_connection</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbConnection.MongoDbConnection.get_connection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pip_services3_mongodb.persistence.MongoDbConnection.MongoDbConnection.get_database">
+<code class="sig-name descname">get_database</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbConnection.MongoDbConnection.get_database" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pip_services3_mongodb.persistence.MongoDbConnection.MongoDbConnection.get_database_name">
+<code class="sig-name descname">get_database_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbConnection.MongoDbConnection.get_database_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pip_services3_mongodb.persistence.MongoDbConnection.MongoDbConnection.is_opened">
+<code class="sig-name descname">is_opened</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbConnection.MongoDbConnection.is_opened" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the component is opened.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>true if the component has been opened and false otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pip_services3_mongodb.persistence.MongoDbConnection.MongoDbConnection.open">
+<code class="sig-name descname">open</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbConnection.MongoDbConnection.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens the component.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>correlation_id</strong> – (optional) transaction id to trace execution through call chain.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>callback function that receives error or null no errors occured.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pip_services3_mongodb.persistence.MongoDbConnection.MongoDbConnection.set_references">
+<code class="sig-name descname">set_references</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">references</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbConnection.MongoDbConnection.set_references" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets references to dependent components.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>references</strong> – references to locate the component dependencies.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pip_services3_mongodb.persistence.MongoDbPersistence.html" class="btn btn-neutral float-right" title="pip_services3_mongodb.persistence.MongoDbPersistence module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence.html" class="btn btn-neutral float-left" title="pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Sergey Seroukhov
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

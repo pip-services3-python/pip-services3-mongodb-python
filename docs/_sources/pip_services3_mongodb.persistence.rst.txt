@@ -5,14 +5,16 @@ Submodules
 ----------
 
 .. toctree::
+   :maxdepth: 4
 
    pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence
+   pip_services3_mongodb.persistence.MongoDbConnection
    pip_services3_mongodb.persistence.MongoDbPersistence
 
 Module contents
 ---------------
 
 .. automodule:: pip_services3_mongodb.persistence
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:

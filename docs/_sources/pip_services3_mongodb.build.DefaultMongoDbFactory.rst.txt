@@ -1,0 +1,7 @@
+pip\_services3\_mongodb.build.DefaultMongoDbFactory module
+==========================================================
+
+.. automodule:: pip_services3_mongodb.build.DefaultMongoDbFactory
+   :members:
+   :undoc-members:
+   :show-inheritance:

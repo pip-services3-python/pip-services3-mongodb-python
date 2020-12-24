@@ -1,167 +1,273 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>pip_services3_mongodb.connect.MongoDbConnectionResolver module &#8212; Pip.Services MongoDb for Python API</title>
-    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pip_services3_mongodb.connect.MongoDbConnectionResolver module &mdash; pip-services3-mongodb  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
     
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="pip_services3_mongodb.persistence package" href="pip_services3_mongodb.persistence.html" />
     <link rel="prev" title="pip_services3_mongodb.connect package" href="pip_services3_mongodb.connect.html" /> 
-  </head><body>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="pip_services3_mongodb.persistence.html" title="pip_services3_mongodb.persistence package"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="pip_services3_mongodb.connect.html" title="pip_services3_mongodb.connect package"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Pip.Services MongoDb for Python API</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="modules.html" >pip_services3_mongodb</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="pip_services3_mongodb.html" >pip_services3_mongodb package</a> &#187;</li>
-          <li class="nav-item nav-item-3"><a href="pip_services3_mongodb.connect.html" accesskey="U">pip_services3_mongodb.connect package</a> &#187;</li> 
-      </ul>
-    </div>  
+</head>
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> pip-services3-mongodb
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">pip_services3_mongodb</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="pip_services3_mongodb.html">pip_services3_mongodb package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="pip_services3_mongodb.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="pip_services3_mongodb.build.html">pip_services3_mongodb.build package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="pip_services3_mongodb.connect.html">pip_services3_mongodb.connect package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pip_services3_mongodb.persistence.html">pip_services3_mongodb.persistence package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pip_services3_mongodb.html#module-pip_services3_mongodb">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pip-services3-mongodb</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="modules.html">pip_services3_mongodb</a> &raquo;</li>
+        
+          <li><a href="pip_services3_mongodb.html">pip_services3_mongodb package</a> &raquo;</li>
+        
+          <li><a href="pip_services3_mongodb.connect.html">pip_services3_mongodb.connect package</a> &raquo;</li>
+        
+      <li>pip_services3_mongodb.connect.MongoDbConnectionResolver module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/pip_services3_mongodb.connect.MongoDbConnectionResolver.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <div class="section" id="module-pip_services3_mongodb.connect.MongoDbConnectionResolver">
 <span id="pip-services3-mongodb-connect-mongodbconnectionresolver-module"></span><h1>pip_services3_mongodb.connect.MongoDbConnectionResolver module<a class="headerlink" href="#module-pip_services3_mongodb.connect.MongoDbConnectionResolver" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="pip-services3-mongodb-connect-mongodbconnectionresolver">
 <h2>pip_services3_mongodb.connect.MongoDbConnectionResolver<a class="headerlink" href="#pip-services3-mongodb-connect-mongodbconnectionresolver" title="Permalink to this headline">¶</a></h2>
 <p>MongoDbConnectionResolver implementation.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">copyright:</th><td class="field-body">Conceptual Vision Consulting LLC 2018-2019, see AUTHORS for more details.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">license:</th><td class="field-body">MIT, see LICENSE for more details.</td>
-</tr>
-</tbody>
-</table>
-<dl class="class">
+<dl class="field-list simple">
+<dt class="field-odd">copyright</dt>
+<dd class="field-odd"><p>Conceptual Vision Consulting LLC 2018-2019, see AUTHORS for more details.</p>
+</dd>
+<dt class="field-even">license</dt>
+<dd class="field-even"><p>MIT, see LICENSE for more details.</p>
+</dd>
+</dl>
+<dl class="py class">
 <dt id="pip_services3_mongodb.connect.MongoDbConnectionResolver.MongoDbConnectionResolver">
-<em class="property">class </em><code class="descclassname">pip_services3_mongodb.connect.MongoDbConnectionResolver.</code><code class="descname">MongoDbConnectionResolver</code><a class="headerlink" href="#pip_services3_mongodb.connect.MongoDbConnectionResolver.MongoDbConnectionResolver" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pip_services3_mongodb.connect.MongoDbConnectionResolver.</code><code class="sig-name descname">MongoDbConnectionResolver</code><a class="headerlink" href="#pip_services3_mongodb.connect.MongoDbConnectionResolver.MongoDbConnectionResolver" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pip_services3_commons.refer.IReferenceable.IReferenceable</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">pip_services3_commons.config.IConfigurable.IConfigurable</span></code></p>
 <p>MongoDbConnectionResolver implementation.
 Helper class that resolves MongoDB connection
 and credential parameters, validates them and generates a connection URI.</p>
 <p>It is able to process multiple connections to MongoDB cluster nodes.</p>
-<p>### Configuration parameters ###</p>
-<blockquote>
-<div><ul class="simple">
-<li><dl class="first docutils">
-<dt>connection(s):</dt>
-<dd><ul class="first last">
-<li>discovery_key:               (optional) a key to retrieve the connection from <a href="https://pip-services3-python.github.io/pip-services3-components-python/pip_services3_components.connect.IDiscovery.html">IDiscovery</a></li>
-<li>host:                        host name or IP address</li>
-<li>port:                        port number (default: 27017)</li>
-<li>database:                    database name</li>
-<li>uri:                         resource URI or connection string with all parameters in it</li>
+<dl class="simple">
+<dt>### Configuration parameters ###</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>connection(s):</dt><dd><ul>
+<li><p>discovery_key:               (optional) a key to retrieve the connection from IDiscovery</p></li>
+<li><p>host:                        host name or IP address</p></li>
+<li><p>port:                        port number (default: 27017)</p></li>
+<li><p>database:                    database name</p></li>
+<li><p>uri:                         resource URI or connection string with all parameters in it</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>credential(s):</dt>
-<dd><ul class="first last">
-<li>store_key:                   (optional) a key to retrieve the credentials from <a href="https://pip-services3-python.github.io/pip-services3-components-python/pip_services3_components.auth.ICredentialStore.html">ICredentialStore</a></li>
-<li>username:                    user name</li>
-<li>password:                    user password</li>
+<li><dl class="simple">
+<dt>credential(s):</dt><dd><ul>
+<li><p>store_key:                   (optional) a key to retrieve the credentials from ICredentialStore</p></li>
+<li><p>username:                    user name</p></li>
+<li><p>password:                    user password</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-</div></blockquote>
+</dd>
+</dl>
 <p>### References ###</p>
 <blockquote>
 <div><ul class="simple">
-<li><em>:discovery:</em>:<a href="#id1"><span class="problematic" id="id2">*</span></a>:1.0             (optional) <a href="https://pip-services3-python.github.io/pip-services3-components-python/pip_services3_components.connect.IDiscovery.html">IDiscovery</a> services</li>
-<li><em>:credential-store:</em>:<a href="#id3"><span class="problematic" id="id4">*</span></a>:1.0      (optional) <a href="https://pip-services3-python.github.io/pip-services3-components-python/pip_services3_components.auth.ICredentialStore.html">Credential stores</a> to resolve credentials</li>
+<li><p><em>:discovery:</em>:<a href="#id1"><span class="problematic" id="id2">*</span></a>:1.0             (optional) <code class="xref py py-class docutils literal notranslate"><span class="pre">IDiscovery</span></code> services</p></li>
+<li><p><em>:credential-store:</em>:<a href="#id3"><span class="problematic" id="id4">*</span></a>:1.0      (optional) <code class="xref py py-class docutils literal notranslate"><span class="pre">Credential</span></code> stores to resolve credentials</p></li>
 </ul>
 </div></blockquote>
-<dl class="method">
+<dl class="py method">
 <dt id="pip_services3_mongodb.connect.MongoDbConnectionResolver.MongoDbConnectionResolver.compose_uri">
-<code class="descname">compose_uri</code><span class="sig-paren">(</span><em>connections</em>, <em>credential</em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.connect.MongoDbConnectionResolver.MongoDbConnectionResolver.compose_uri" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">compose_uri</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">connections</span></em>, <em class="sig-param"><span class="n">credential</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.connect.MongoDbConnectionResolver.MongoDbConnectionResolver.compose_uri" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pip_services3_mongodb.connect.MongoDbConnectionResolver.MongoDbConnectionResolver.configure">
-<code class="descname">configure</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.connect.MongoDbConnectionResolver.MongoDbConnectionResolver.configure" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">configure</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">config</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.connect.MongoDbConnectionResolver.MongoDbConnectionResolver.configure" title="Permalink to this definition">¶</a></dt>
 <dd><p>Configures component by passing configuration parameters.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config</strong> – configuration parameters to be set.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> – configuration parameters to be set.</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pip_services3_mongodb.connect.MongoDbConnectionResolver.MongoDbConnectionResolver.resolve">
-<code class="descname">resolve</code><span class="sig-paren">(</span><em>correlation_id</em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.connect.MongoDbConnectionResolver.MongoDbConnectionResolver.resolve" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">resolve</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.connect.MongoDbConnectionResolver.MongoDbConnectionResolver.resolve" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resolves MongoDB connection URI from connection and credential parameters.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>correlation_id</strong> – (optional) transaction id to trace execution through call chain.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a resolved URI</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>correlation_id</strong> – (optional) transaction id to trace execution through call chain.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a resolved URI</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pip_services3_mongodb.connect.MongoDbConnectionResolver.MongoDbConnectionResolver.set_references">
-<code class="descname">set_references</code><span class="sig-paren">(</span><em>references</em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.connect.MongoDbConnectionResolver.MongoDbConnectionResolver.set_references" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_references</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">references</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.connect.MongoDbConnectionResolver.MongoDbConnectionResolver.set_references" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets references to dependent components.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>references</strong> – references to locate the component dependencies.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>references</strong> – references to locate the component dependencies.</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pip_services3_mongodb.connect.MongoDbConnectionResolver.MongoDbConnectionResolver.validate_connection">
-<code class="descname">validate_connection</code><span class="sig-paren">(</span><em>correlation_id</em>, <em>connection</em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.connect.MongoDbConnectionResolver.MongoDbConnectionResolver.validate_connection" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">validate_connection</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span></em>, <em class="sig-param"><span class="n">connection</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.connect.MongoDbConnectionResolver.MongoDbConnectionResolver.validate_connection" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pip_services3_mongodb.connect.MongoDbConnectionResolver.MongoDbConnectionResolver.validate_connections">
-<code class="descname">validate_connections</code><span class="sig-paren">(</span><em>correlation_id</em>, <em>connections</em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.connect.MongoDbConnectionResolver.MongoDbConnectionResolver.validate_connections" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">validate_connections</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span></em>, <em class="sig-param"><span class="n">connections</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.connect.MongoDbConnectionResolver.MongoDbConnectionResolver.validate_connections" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -170,72 +276,59 @@ and credential parameters, validates them and generates a connection URI.</p>
 </div>
 
 
+           </div>
+           
           </div>
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">pip_services3_mongodb.connect.MongoDbConnectionResolver module</a><ul>
-<li><a class="reference internal" href="#pip-services3-mongodb-connect-mongodbconnectionresolver">pip_services3_mongodb.connect.MongoDbConnectionResolver</a></li>
-</ul>
-</li>
-</ul>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pip_services3_mongodb.persistence.html" class="btn btn-neutral float-right" title="pip_services3_mongodb.persistence package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="pip_services3_mongodb.connect.html" class="btn btn-neutral float-left" title="pip_services3_mongodb.connect package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="pip_services3_mongodb.connect.html"
-                        title="previous chapter">pip_services3_mongodb.connect package</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="pip_services3_mongodb.persistence.html"
-                        title="next chapter">pip_services3_mongodb.persistence package</a></p>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/pip_services3_mongodb.connect.MongoDbConnectionResolver.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    </div>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Sergey Seroukhov
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
         </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="pip_services3_mongodb.persistence.html" title="pip_services3_mongodb.persistence package"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="pip_services3_mongodb.connect.html" title="pip_services3_mongodb.connect package"
-             >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Pip.Services MongoDb for Python API</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="modules.html" >pip_services3_mongodb</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="pip_services3_mongodb.html" >pip_services3_mongodb package</a> &#187;</li>
-          <li class="nav-item nav-item-3"><a href="pip_services3_mongodb.connect.html" >pip_services3_mongodb.connect package</a> &#187;</li> 
-      </ul>
-    </div>
-    <div class="footer" role="contentinfo">
-        &#169; Copyright 2018, Conceptual Vision Consulting LLC.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
-    </div>
-  </body>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
 </html>

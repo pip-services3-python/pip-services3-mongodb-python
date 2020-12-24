@@ -5,6 +5,7 @@ Submodules
 ----------
 
 .. toctree::
+   :maxdepth: 4
 
    pip_services3_mongodb.connect.MongoDbConnectionResolver
 
@@ -12,6 +13,6 @@ Module contents
 ---------------
 
 .. automodule:: pip_services3_mongodb.connect
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:

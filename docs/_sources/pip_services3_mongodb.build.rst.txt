@@ -1,0 +1,18 @@
+pip\_services3\_mongodb.build package
+=====================================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   pip_services3_mongodb.build.DefaultMongoDbFactory
+
+Module contents
+---------------
+
+.. automodule:: pip_services3_mongodb.build
+   :members:
+   :undoc-members:
+   :show-inheritance:
