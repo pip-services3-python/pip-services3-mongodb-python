@@ -3,14 +3,32 @@
 Set-StrictMode -Version latest
 $ErrorActionPreference = "Stop"
 
+# Get component data
 $component = Get-Content -Path "component.json" | ConvertFrom-Json
 
-if ([string]::IsNullOrEmpty($component.version)) {
-    throw "Versions in component.json do not set"
+# Create pypirc if not exists
+if (!(Test-Path "~/.pypirc")) {
+    $pypircContent = @"
+[distutils]
+index-servers=
+    testpypi
+    pypi
+
+[testpypi]
+repository = https://test.pypi.org/legacy/
+username = $($env:PYPI_USER)
+password = $($env:PYPI_PASS)
+
+[pypi]
+repository = https://upload.pypi.org/legacy/
+username = $($env:PYPI_USER)
+password = $($env:PYPI_PASS)
+"@
+
+    Set-Content -Path "~/.pypirc" -Value $pypircContent
 }
 
-
-# Publish to global repository
-Write-Output "Pushing package to pipy"
+# Release package
+Write-Host "Pushing package to pipy"
 python setup.py sdist
-twine upload --skip-existing dist/*
+python -m twine upload --skip-existing dist/*

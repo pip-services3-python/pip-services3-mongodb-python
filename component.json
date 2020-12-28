@@ -2,5 +2,5 @@
     "name": "pip_services3_mongodb",
     "registry": "pipdevs",
     "version": "3.0.4",
-    "build": "0"
+    "build": 0
 }
