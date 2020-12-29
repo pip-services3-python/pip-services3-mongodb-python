@@ -32,7 +32,7 @@ author = 'Sergey Seroukhov'
 
 extensions = [
     'sphinx.ext.autodoc',
-    # 'sphinx.ext.intersphinx',
+    'sphinx.ext.intersphinx',
     'sphinx.ext.githubpages',
     'sphinx_rtd_theme'
 ]
@@ -63,7 +63,10 @@ html_theme = "sphinx_rtd_theme"
 html_static_path = ['_static']
 
 # Looks for objects in external projects
-# intersphinx_mapping = {'python': ('http://docs.python.org/2', None),
-#                        'numpy': ('http://docs.scipy.org/doc/numpy/', None),
-#                        'scipy': ('http://docs.scipy.org/doc/scipy/reference/', None),
-#                        'pip_services3_commons': ('https://pip-services3-python.github.io/pip-services3-commons-python/index.html', None)}
+intersphinx_mapping = {'python': ('http://docs.python.org/3/', 'https://docs.python.org/3/objects.inv'),
+
+                       'pip_services3_commons': ('https://pip-services3-python.github.io/pip-services3-commons-python/', 
+                           'https://pip-services3-python.github.io/pip-services3-commons-python/objects.inv'),
+
+                       'pip_services3_components': ('https://pip-services3-python.github.io/pip-services3-components-python/', 
+                           'https://pip-services3-python.github.io/pip-services3-components-python/objects.inv') }
