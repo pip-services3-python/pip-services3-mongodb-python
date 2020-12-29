@@ -14,7 +14,7 @@ from ..persistence.MongoDbConnection import MongoDbConnection
 class DefaultMongoDbFactory(Factory):
     """
     Creates MongoDb components by their descriptors.
-    See :class:`Factory`, :class:`MongoDbConnection`
+    See :class:`pip_services3_components.build.Factory.Factory`, :class:`pip_services3_mongodb.persistence.MongoDbConnection.MongoDbConnection`
     """
     __descriptor = Descriptor("pip-services", "factory", "rpc", "default", "1.0")
     __mongo_db_connection_descriptor = Descriptor("pip-services", "connection", "mongodb", "*", "1.0")

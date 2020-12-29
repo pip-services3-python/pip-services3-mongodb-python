@@ -26,7 +26,7 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
     and implements a number of CRUD operations over data items with unique ids.
     The data items must implement IIdentifiable interface.
 
-    In basic scenarios child classes shall only override :func:`get_page_by_filter`,
+    In basic scenarios child classes shall only override :func:`pip_services3_mongodb.persistence.MongoDbPersistence.get_page_by_filter`,
     :func:`get_list_by_filter` or :func:`delete_by_filter` operations with specific filter function.
     All other operations can be used out of the box.
 
@@ -53,10 +53,9 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
             - debug:                     (optional) enable debug output (default: false).
 
     ### References ###
-
-        - *:logger:*:*:1.0           (optional) :class:`ILogger` components to pass log messages components to pass log messages
-        - *:discovery:*:*:1.0        (optional) :class:`IDiscovery` services
-        - *:credential-store:*:*:1.0 (optional) :class:`Credential` stores to resolve credentials
+        - *:logger:*:*:1.0           (optional) :class:`pip_services3_components.log.ILogger.ILogger` components to pass log messages components to pass log messages
+        - *:discovery:*:*:1.0        (optional) :class:`pip_services3_components.connect.IDiscovery.IDiscovery` services
+        - *:credential-store:*:*:1.0 (optional) :class:`pip_services3_components.auth.ICredentialStore.ICredentialStore` stores to resolve credentials
 
     Example:
 

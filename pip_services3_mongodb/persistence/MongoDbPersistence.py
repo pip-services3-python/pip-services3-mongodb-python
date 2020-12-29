@@ -37,12 +37,12 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
     ### Configuration parameters ###
         - collection:                  (optional) MongoDB collection name
         - connection(s):
-            - discovery_key:             (optional) a key to retrieve the connection from :class:`IDiscovery`
+            - discovery_key:             (optional) a key to retrieve the connection from :class:`pip_services3_components.log.ILogger.ILogger`
             - host:                      host name or IP address
             - port:                      port number (default: 27017)
             - uri:                       resource URI or connection string with all parameters in it
         - credential(s):
-            - store_key:                 (optional) a key to retrieve the credentials from :class:`ICredentialStore`
+            - store_key:                 (optional) a key to retrieve the credentials from :class:`pip_services3_components.auth.ICredentialStore.ICredentialStore`
             - username:                  (optional) user name
             - password:                  (optional) user password
         - options:
@@ -54,9 +54,9 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
             - debug:                     (optional) enable debug output (default: false).
 
     ### References ###
-        - *:logger:*:*:1.0           (optional) :class:`ILogger` components to pass log messages
-        - *:discovery:*:*:1.0        (optional) :class:`IDiscovery` services
-        - *:credential-store:*:*:1.0 (optional) :class:`Credential` stores to resolve credentials
+        - *:logger:*:*:1.0           (optional) :class:`pip_services3_components.log.ILogger.ILogger` components to pass log messages
+        - *:discovery:*:*:1.0        (optional) :class:`pip_services3_components.connect.IDiscovery.IDiscovery` services
+        - *:credential-store:*:*:1.0 (optional) :class:`pip_services3_components.auth.ICredentialStore.ICredentialStore` stores to resolve credentials
 
     Example:
 
@@ -284,7 +284,7 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
         Deletes data items that match to a given filter.
 
         This method shall be called by a public :func:`delete_by_filter` method from child class that
-        receives :class:`FilterParams` and converts them into a filter function.
+        receives :class:`pip_services3_commons.data.FilterParams.FilterParams` and converts them into a filter function.
 
         :param correlation_id: (optional) transaction id to trace execution through call chain.
 
