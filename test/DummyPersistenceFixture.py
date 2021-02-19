@@ -7,8 +7,9 @@
     :license: MIT, see LICENSE for more details.
 """
 
-from .Dummy import Dummy
 from pip_services3_commons.data import AnyValueMap
+
+from .Dummy import Dummy
 
 DUMMY1 = Dummy(None, 'Key 1', 'Content 1')
 DUMMY2 = Dummy(None, 'Key 2', 'Content 2')

@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import pytest
 import os
 
 from pip_services3_commons.config import ConfigParams
-from pip_services3_components.config import YamlConfigReader
-from .DummyMongoDbPersistence import DummyMongoDbPersistence
-from ..DummyPersistenceFixture import DummyPersistenceFixture
+
 from pip_services3_mongodb.persistence.MongoDbConnection import MongoDbConnection
 
 

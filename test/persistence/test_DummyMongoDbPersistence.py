@@ -7,11 +7,10 @@
     :license: MIT, see LICENSE for more details.
 """
 
-import pytest
 import os
 
 from pip_services3_commons.config import ConfigParams
-from pip_services3_components.config import YamlConfigReader
+
 from .DummyMongoDbPersistence import DummyMongoDbPersistence
 from ..DummyPersistenceFixture import DummyPersistenceFixture
 
@@ -21,13 +20,13 @@ class TestDummyMongoDbPersistence:
     fixture = None
 
     mongoUri = os.getenv('MONGO_URI')
-    mongoHost = os.getenv('MONGO_HOST') if os.getenv('MONGO_HOST') != None else 'localhost'
-    mongoPort = os.getenv('MONGO_PORT') if os.getenv('MONGO_PORT') != None else 27017
-    mongoDatabase = os.getenv('MONGO_DB') if os.getenv('MONGO_DB') != None else 'test'
+    mongoHost = os.getenv('MONGO_HOST') if os.getenv('MONGO_HOST') else 'localhost'
+    mongoPort = os.getenv('MONGO_PORT') if os.getenv('MONGO_PORT') else 27017
+    mongoDatabase = os.getenv('MONGO_DB') if os.getenv('MONGO_DB') else 'test'
 
     @classmethod
     def setup_class(cls):
-        if cls.mongoUri == None and cls.mongoHost == None:
+        if cls.mongoUri is None and cls.mongoHost is None:
             return
 
         db_config = ConfigParams.from_tuples('connection.uri', cls.mongoUri,

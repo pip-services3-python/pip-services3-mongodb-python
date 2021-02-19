@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import pymongo
-
-from pip_services3_commons.refer import IReferenceable, IReferences
-from pip_services3_commons.config import IConfigurable, ConfigParams
-from pip_services3_commons.run.IOpenable import IOpenable
+from pip_services3_commons.config import ConfigParams
 from pip_services3_commons.errors.ConnectionException import ConnectionException
+from pip_services3_commons.refer import IReferenceable, IReferences
+from pip_services3_commons.run.IOpenable import IOpenable
 from pip_services3_components.log.CompositeLogger import CompositeLogger
 
 from pip_services3_mongodb.connect.MongoDbConnectionResolver import MongoDbConnectionResolver
@@ -175,7 +174,6 @@ class MongoDbConnection(IReferenceable, IReferences, IOpenable):
             if settings[k] is not None:
                 new_settings[k] = settings[k]
         return new_settings
-
 
     def close(self, correlation_id):
         """

@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 
 import os
-import pytest
 
 from pip_services3_commons.config.ConfigParams import ConfigParams
 from pip_services3_commons.refer.Descriptor import Descriptor
 from pip_services3_commons.refer.References import References
+
 from pip_services3_mongodb.persistence.MongoDbConnection import MongoDbConnection
-from ..DummyPersistenceFixture import DummyPersistenceFixture
 from .DummyMongoDbPersistence import DummyMongoDbPersistence
+from ..DummyPersistenceFixture import DummyPersistenceFixture
+
 
 class TestDummyMongoDbConnection:
     persistence = None
