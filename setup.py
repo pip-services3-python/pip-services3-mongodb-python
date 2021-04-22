@@ -23,7 +23,7 @@ from setuptools import find_packages
 
 setup(
     name='pip_services3_mongodb',
-    version='3.0.5',
+    version='3.0.6',
     url='http://github.com/pip-services3-python/pip-services3-mongodb-python',
     license='MIT',
     author='Conceptual Vision Consulting LLC',

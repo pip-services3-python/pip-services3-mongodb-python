@@ -199,7 +199,7 @@ accessing <strong>self.__collection</strong> or <strong>self.__model</strong> pr
 <li><p>collection:                  (optional) MongoDB collection name</p></li>
 <li><dl class="simple">
 <dt>connection(s):</dt><dd><ul>
-<li><p>discovery_key:             (optional) a key to retrieve the connection from <a class="reference external" href="https://pip-services3-python.github.io/pip-services3-components-python/pip_services3_components.log.ILogger.html#pip_services3_components.log.ILogger.ILogger" title="(in pip-services3-components)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ILogger</span></code></a></p></li>
+<li><p>discovery_key:             (optional) a key to retrieve the connection from <a class="reference external" href="https://pip-services3-python.github.io/pip-services3-components-python/pip_services3_components.connect.IDiscovery.html#pip_services3_components.connect.IDiscovery.IDiscovery" title="(in pip-services3-components)"><code class="xref py py-class docutils literal notranslate"><span class="pre">IDiscovery</span></code></a></p></li>
 <li><p>host:                      host name or IP address</p></li>
 <li><p>port:                      port number (default: 27017)</p></li>
 <li><p>uri:                       resource URI or connection string with all parameters in it</p></li>
@@ -425,6 +425,12 @@ receives FilterParams and converts them into a filter function.</p>
 <dd class="field-odd"><p><strong>references</strong> – references to locate the component dependencies.</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pip_services3_mongodb.persistence.MongoDbPersistence.MongoDbPersistence.unset_references">
+<code class="sig-name descname">unset_references</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbPersistence.MongoDbPersistence.unset_references" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unsets (clears) previously set references to dependent components.</p>
 </dd></dl>
 
 </dd></dl>

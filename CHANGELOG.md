@@ -1,5 +1,10 @@
 # <img src="https://uploads-ssl.webflow.com/5ea5d3315186cf5ec60c3ee4/5edf1c94ce4c859f2b188094_logo.svg" alt="Pip.Services Logo" width="200"> <br/> MongoDB components for Python Changelog
 
+## <a name="3.0.6"></a> 3.0.6 (2021-04-22)
+
+### Bug Fixes
+* Fixed returning id in IdentifiableMongoDbPersistence.create 
+
 ## <a name="3.0.5"></a> 3.0.5 (2021-02-19)
 
 ### Features

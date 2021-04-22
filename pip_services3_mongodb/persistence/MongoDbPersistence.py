@@ -38,7 +38,7 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
     ### Configuration parameters ###
         - collection:                  (optional) MongoDB collection name
         - connection(s):
-            - discovery_key:             (optional) a key to retrieve the connection from :class:`ILogger <pip_services3_components.log.ILogger.ILogger>`
+            - discovery_key:             (optional) a key to retrieve the connection from :class:`IDiscovery <pip_services3_components.connect.IDiscovery.IDiscovery>`
             - host:                      host name or IP address
             - port:                      port number (default: 27017)
             - uri:                       resource URI or connection string with all parameters in it

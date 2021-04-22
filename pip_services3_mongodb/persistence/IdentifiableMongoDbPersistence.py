@@ -132,7 +132,7 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
         new_item.pop('_id', None)
         new_item['_id'] = item['id'] if 'id' in item and item['id'] != None else IdGenerator.next_long()
 
-        return super().create(correlation_id, item)
+        return super().create(correlation_id, new_item)
 
     def set(self, correlation_id, item):
         """
