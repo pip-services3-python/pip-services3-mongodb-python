@@ -8,11 +8,13 @@
     :copyright: Conceptual Vision Consulting LLC 2018-2019, see AUTHORS for more details.
     :license: MIT, see LICENSE for more details.
 """
+from typing import Optional, List
+
 from pip_services3_commons.config import IConfigurable, ConfigParams
 from pip_services3_commons.errors import ConfigException
-from pip_services3_commons.refer import IReferenceable
-from pip_services3_components.auth import CredentialResolver
-from pip_services3_components.connect import ConnectionResolver
+from pip_services3_commons.refer import IReferenceable, IReferences
+from pip_services3_components.auth import CredentialResolver, CredentialParams
+from pip_services3_components.connect import ConnectionResolver, ConnectionParams
 
 
 class MongoDbConnectionResolver(IReferenceable, IConfigurable):
@@ -39,10 +41,12 @@ class MongoDbConnectionResolver(IReferenceable, IConfigurable):
         - `*:discovery:*:*:1.0`             (optional) :class:`IDiscovery <pip_services3_components.connect.IDiscovery.IDiscovery>` services
         - `*:credential-store:*:*:1.0`      (optional) :class:`ICredentialStore <pip_services3_components.auth.ICredentialStore.ICredentialStore>` stores to resolve credentials
     """
-    _connection_resolver = ConnectionResolver()
-    _credential_resolver = CredentialResolver()
 
-    def configure(self, config):
+    def __init__(self):
+        self._connection_resolver: ConnectionResolver = ConnectionResolver()
+        self._credential_resolver: CredentialResolver = CredentialResolver()
+
+    def configure(self, config: ConfigParams):
         """
         Configures component by passing configuration parameters.
 
@@ -51,7 +55,7 @@ class MongoDbConnectionResolver(IReferenceable, IConfigurable):
         self._connection_resolver.configure(config)
         self._credential_resolver.configure(config)
 
-    def set_references(self, references):
+    def set_references(self, references: IReferences):
         """
         Sets references to dependent components.
 
@@ -60,13 +64,13 @@ class MongoDbConnectionResolver(IReferenceable, IConfigurable):
         self._connection_resolver.set_references(references)
         self._credential_resolver.set_references(references)
 
-    def validate_connection(self, correlation_id, connection):
+    def __validate_connection(self, correlation_id: Optional[str], connection: ConnectionParams):
         uri = connection.get_uri()
-        if uri == None:
+        if uri is None:
             return None
 
         host = connection.get_host()
-        if host == None:
+        if host is None:
             return ConfigException(correlation_id, "NO_HOST", "Connection host is not set")
 
         port = connection.get_port()
@@ -74,20 +78,20 @@ class MongoDbConnectionResolver(IReferenceable, IConfigurable):
             return ConfigException(correlation_id, "NO_PORT", "Connection port is not set")
 
         database = connection.get_as_nullable_string("database")
-        if database == None:
+        if database is None:
             return ConfigException(correlation_id, "NO_DATABASE", "Connection database is not set")
 
-    def validate_connections(self, correlation_id, connections):
-        if connections == None or len(connections) == 0:
+    def __validate_connections(self, correlation_id: Optional[str], connections: List[ConnectionParams]):
+        if connections is None or len(connections) == 0:
             return ConfigException(correlation_id, "NO_CONNECTION", "Database connection is not set")
 
         for connection in connections:
-            error = self.validate_connection(correlation_id, connection)
+            error = self.__validate_connection(correlation_id, connection)
 
-    def compose_uri(self, connections, credential):
+    def __compose_uri(self, connections: List[ConnectionParams], credential: CredentialParams) -> str:
         for connection in connections:
             uri = connection.get_uri()
-            if uri != None:
+            if uri is not None:
                 return uri
 
         hosts = ''
@@ -97,23 +101,23 @@ class MongoDbConnectionResolver(IReferenceable, IConfigurable):
 
             if len(hosts) > 0:
                 hosts = hosts + ','
-            hosts = hosts + host + (':' + str(port) if port != None else '')
+            hosts = hosts + host + (':' + str(port) if port is not None else '')
 
         database = ''
         for connection in connections:
             database = connection.get_as_nullable_string("database") \
-                if connection.get_as_nullable_string("database") != None \
+                if connection.get_as_nullable_string("database") is not None \
                 else database
 
             if len(database) > 0:
                 database = '/' + database
 
         auth = ''
-        if credential != None:
+        if credential is not None:
             username = credential.get_username()
-            if username != None:
+            if username is not None:
                 password = credential.get_password()
-                if password != None:
+                if password is not None:
                     auth = username + ':' + password + '@'
                 else:
                     auth = username + '@'
@@ -132,7 +136,7 @@ class MongoDbConnectionResolver(IReferenceable, IConfigurable):
         options.remove("password")
 
         parameters = ''
-        keys = options.get_key_names()
+        keys = options.get_keys()
         for key in keys:
             if len(parameters) > 0:
                 parameters += '&'
@@ -140,7 +144,7 @@ class MongoDbConnectionResolver(IReferenceable, IConfigurable):
             parameters += key
 
             value = options.get_as_string(key)
-            if value != None:
+            if value is not None:
                 parameters += '=' + value
 
         if len(parameters) > 0:
@@ -150,7 +154,7 @@ class MongoDbConnectionResolver(IReferenceable, IConfigurable):
 
         return uri
 
-    def resolve(self, correlation_id):
+    def resolve(self, correlation_id: Optional[str]) -> str:
         """
         Resolves MongoDB connection URI from connection and credential parameters.
 
@@ -161,11 +165,6 @@ class MongoDbConnectionResolver(IReferenceable, IConfigurable):
         connections = self._connection_resolver.resolve_all(correlation_id)
         credential = self._credential_resolver.lookup(correlation_id)
 
-        self.validate_connections(correlation_id, connections)
+        self.__validate_connections(correlation_id, connections)
 
-        return self.compose_uri(connections, credential)
-
-
-
-
-
+        return self.__compose_uri(connections, credential)

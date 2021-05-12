@@ -4,7 +4,7 @@ import os
 
 from pip_services3_commons.config import ConfigParams
 
-from pip_services3_mongodb.persistence.MongoDbConnection import MongoDbConnection
+from pip_services3_mongodb.connect.MongoDbConnection import MongoDbConnection
 
 
 class TestDbConnection:

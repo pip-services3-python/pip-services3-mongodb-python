@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from typing import Any, Optional
 
 import pymongo
 from pip_services3_commons.config import ConfigParams
@@ -46,24 +47,6 @@ class MongoDbConnection(IReferenceable, IReferences, IOpenable):
         - **\*:credential-store:\*:\*:1.0** (optional)  :class:`ICredentialStore <pip_services3_components.auth.ICredentialStore.ICredentialStore>` stores to resolve credentials
     """
 
-    # The logger
-    _logger = None
-
-    # The connection resolver
-    _connection_resolver = None
-
-    # The configuration options.
-    _options = None
-
-    # The MongoDB connection object.
-    _connection = None
-
-    # The MongoDB database name.
-    _database_name = None
-
-    # The MongoDb database object.
-    _db = None
-
     def __init__(self):
         """
         Creates a new instance of the connection component.
@@ -77,11 +60,20 @@ class MongoDbConnection(IReferenceable, IReferences, IOpenable):
             'options.debug', True
         )
 
-        self._logger = CompositeLogger()
-        self._connection_resolver = MongoDbConnectionResolver()
-        self._options = ConfigParams()
+        # The logger
+        self._logger: CompositeLogger = CompositeLogger()
+        # The connection resolver
+        self._connection_resolver: MongoDbConnectionResolver = MongoDbConnectionResolver()
+        # The configuration options.
+        self._options: ConfigParams = ConfigParams()
+        # The MongoDB connection object.
+        self._connection: Any = None
+        # The MongoDB database name.
+        self._database_name: str = None
+        # The MongoDb database object.
+        self._db: Any = None
 
-    def configure(self, config):
+    def configure(self, config: ConfigParams):
         """
         Configures component by passing configuration parameters.
 
@@ -91,7 +83,7 @@ class MongoDbConnection(IReferenceable, IReferences, IOpenable):
         self._connection_resolver.configure(config)
         self._options = self._options.override(config.get_section('options'))
 
-    def set_references(self, references):
+    def set_references(self, references: IReferences):
         """
         Sets references to dependent components.
 
@@ -100,7 +92,7 @@ class MongoDbConnection(IReferenceable, IReferences, IOpenable):
         self._logger.set_references(references)
         self._connection_resolver.set_references(references)
 
-    def is_opened(self):
+    def is_open(self) -> bool:
         """
         Checks if the component is opened.
 
@@ -108,7 +100,7 @@ class MongoDbConnection(IReferenceable, IReferences, IOpenable):
         """
         return self._connection is not None
 
-    def __compose_settings(self):
+    def __compose_settings(self) -> Any:
         max_pool_size = self._options.get_as_nullable_string('max_pool_size')
         keep_alive = self._options.get_as_boolean('keep_alive')
         connection_timeout_ms = self._options.get_as_nullable_integer('connect_timeout')
@@ -143,12 +135,11 @@ class MongoDbConnection(IReferenceable, IReferences, IOpenable):
 
         return settings
 
-    def open(self, correlation_id):
+    def open(self, correlation_id: Optional[str]):
         """
         Opens the component.
 
         :param correlation_id: (optional) transaction id to trace execution through call chain.
-        :return: callback function that receives error or null no errors occured.
         """
         self._logger.debug(correlation_id, 'Connecting to mongodb')
 
@@ -168,19 +159,18 @@ class MongoDbConnection(IReferenceable, IReferences, IOpenable):
         except Exception as ex:
             raise ConnectionException(correlation_id, 'CONNECT_FAILED', 'Connection to mongodb failed').with_cause(ex)
 
-    def __del_none_objects(self, settings):
+    def __del_none_objects(self, settings: dict):
         new_settings = {}
         for k in settings.keys():
             if settings[k] is not None:
                 new_settings[k] = settings[k]
         return new_settings
 
-    def close(self, correlation_id):
+    def close(self, correlation_id: Optional[str]):
         """
         Closes component and frees used resources.
 
         :param correlation_id: (optional) transaction id to trace execution through call chain.
-        :return: callback function that receives error or null no errors occured.
         """
         if self._connection is None:
             return
@@ -195,11 +185,11 @@ class MongoDbConnection(IReferenceable, IReferences, IOpenable):
             raise ConnectionException(correlation_id, 'DISCONNECT_FAILED',
                                       'Disconnect from mongodb failed: ').with_cause(ex)
 
-    def get_connection(self):
+    def get_connection(self) -> Any:
         return self._connection
 
-    def get_database(self):
+    def get_database(self) -> Any:
         return self._db
 
-    def get_database_name(self):
+    def get_database_name(self) -> str:
         return self._database_name

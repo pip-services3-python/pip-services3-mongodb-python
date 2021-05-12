@@ -8,11 +8,15 @@
     :copyright: Conceptual Vision Consulting LLC 2018-2019, see AUTHORS for more details.
     :license: MIT, see LICENSE for more details.
 """
+from copy import deepcopy
+from typing import Any, TypeVar, Optional, List
 
 import pymongo
 from pip_services3_commons.data import AnyValueMap, IdGenerator
 
 from .MongoDbPersistence import MongoDbPersistence
+
+T = TypeVar('T')  # Declare type variable
 
 
 class IdentifiableMongoDbPersistence(MongoDbPersistence):
@@ -29,22 +33,27 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
     accessing **self.__collection** and **self.__model** properties.
 
     ### Configuration parameters ###
-        - collection:                  (optional) MongoDB collection name
+
         - connection(s):
-            - discovery_key:             (optional) a key to retrieve the connection from IDiscovery
+            - discovery_key:             (optional) a key to retrieve the connection from :class:`IDiscovery <pip_services3_components.connect.IDiscovery.IDiscovery>`
             - host:                      host name or IP address
             - port:                      port number (default: 27017)
             - uri:                       resource URI or connection string with all parameters in it
         - credential(s):
-            - store_key:                 (optional) a key to retrieve the credentials from ICredentialStore
+            - store_key:                 (optional) a key to retrieve the credentials from :class:`ICredentialStore <pip_services3_components.auth.ICredentialStore.ICredentialStore>`
             - username:                  (optional) user name
             - password:                  (optional) user password
         - options:
             - max_pool_size:             (optional) maximum connection pool size (default: 2)
             - keep_alive:                (optional) enable connection keep alive (default: true)
-            - connect_timeout:           (optional) connection timeout in milliseconds (default: 5 sec)
+            - connect_timeout:           (optional) connection timeout in milliseconds (default: 5000)
+            - socket_timeout:            (optional) socket timeout in milliseconds (default: 360000)
             - auto_reconnect:            (optional) enable auto reconnection (default: true)
+            - reconnect_interval:        (optional) reconnection interval in milliseconds (default: 1000)
             - max_page_size:             (optional) maximum page size (default: 100)
+            - replica_set:               (optional) name of replica set
+            - ssl:                       (optional) enable SSL connection (default: false)
+            - auth_source:               (optional) authentication source
             - debug:                     (optional) enable debug output (default: false).
 
     ### References ###
@@ -76,7 +85,7 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
         # ...
     """
 
-    def __init__(self, collection=None):
+    def __init__(self, collection: str = None):
         """
         Creates a new instance of the persistence component.
 
@@ -84,7 +93,16 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
         """
         super(IdentifiableMongoDbPersistence, self).__init__(collection)
 
-    def get_list_by_ids(self, correlation_id, ids):
+    def _convert_from_public_partial(self, value: Any) -> Any:
+        """
+        Converts the given object from the public partial format.
+
+        :param value: the object to convert from the public partial format.
+        :return: the initial object.
+        """
+        return self._convert_from_public(value)
+
+    def get_list_by_ids(self, correlation_id: Optional[str], ids: List[Any]) -> List[T]:
         """
         Gets a list of data items retrieved by given unique ids.
 
@@ -97,7 +115,7 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
         filters = {'_id': {'$in': ids}}
         return self.get_list_by_filter(correlation_id, filters)
 
-    def get_one_by_id(self, correlation_id, id):
+    def get_one_by_id(self, correlation_id: Optional[str], id: Any) -> T:
         """
         Gets a data item by its unique id.
 
@@ -108,14 +126,15 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
         :return: data item by id.
         """
         item = self._collection.find_one({'_id': id})
-        # TODO: Add trace
-        # correlationId, "Nothing found from %s with id = %s", this._collectionName, id
-        # correlationId, "Retrieved from %s with id = %s", this._collectionName, id
+        if item is None:
+            self._logger.trace(correlation_id, "Nothing found from %s with id = %s", self._collection_name, id)
+        else:
+            self._logger.trace(correlation_id, "Retrieved from %s with id = %s", self._collection_name, id)
 
         item = self._convert_to_public(item)
         return item
 
-    def create(self, correlation_id, item):
+    def create(self, correlation_id: Optional[str], item: T) -> T:
         """
         Creates a data item.
 
@@ -134,7 +153,7 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
 
         return super().create(correlation_id, new_item)
 
-    def set(self, correlation_id, item):
+    def set(self, correlation_id: Optional[str], item: T) -> T:
         """
         Sets a data item. If the data item exists it updates it, otherwise it create a new data item.
 
@@ -149,43 +168,50 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
 
         # Replace _id or generate a new one
         new_item.pop('_id', None)
-        new_item['_id'] = item['id'] if 'id' in item and item['id'] != None else IdGenerator.next_long()
+        new_item['_id'] = item['id'] if 'id' in item and item['id'] is not None else IdGenerator.next_long()
         _id = new_item['_id']
+        new_item = self._convert_from_public(new_item)
 
-        item = self._collection.find_one_and_update( \
-            {'_id': _id}, {'$set': new_item}, \
-            return_document=pymongo.ReturnDocument.AFTER, \
-            upsert=True \
-            )
+        item = self._collection.find_one_and_update(
+            {'_id': _id}, {'$set': new_item},
+            return_document=pymongo.ReturnDocument.AFTER,
+            upsert=True
+        )
+
+        if item is not None:
+            self._logger.trace(correlation_id, "Set in %s with id = %s", self._collection_name, item['id'])
 
         item = self._convert_to_public(item)
         return item
 
-    def update(self, correlation_id, new_item):
+    def update(self, correlation_id: Optional[str], item: T) -> T:
         """
         Updates a data item.
 
         :param correlation_id: (optional) transaction id to trace execution through call chain.
 
-        :param new_item: an item to be updated.
+        :param item: an item to be updated.
 
         :return: an updated item.
         """
+        if item is None or item['id'] is None:
+            return
+        new_item = deepcopy(item)
+        del new_item['id']
         new_item = self._convert_from_public(new_item)
-        _id = new_item['id']
-        new_item = dict(new_item)
-        new_item.pop('_id', None)
-        new_item.pop('id', None)
+        _id = item['id']
 
-        item = self._collection.find_one_and_update( \
-            {'_id': _id}, {'$set': new_item}, \
-            return_document=pymongo.ReturnDocument.AFTER \
-            )
+        result = self._collection.find_one_and_update(
+            {'_id': _id}, {'$set': new_item},
+            return_document=pymongo.ReturnDocument.AFTER
+        )
 
-        item = self._convert_to_public(item)
-        return item
+        self._logger.trace(correlation_id, "Updated in %s with id = %s", self._collection_name, item['id'])
 
-    def update_partially(self, correlation_id, id, data):
+        new_item = self._convert_to_public(result)
+        return new_item
+
+    def update_partially(self, correlation_id: Optional[str], id: Any, data: AnyValueMap) -> T:
         """
         Updates only few selected fields in a data item.
 
@@ -200,17 +226,20 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
         new_item = data.get_as_object() if isinstance(data, AnyValueMap) else dict(data)
         new_item.pop('_id', None)
         new_item.pop('id', None)
+        new_item = self._convert_from_public_partial(new_item)
 
-        item = self._collection.find_one_and_update( \
-            {'_id': id}, {'$set': new_item}, \
-            return_document=pymongo.ReturnDocument.AFTER \
-            )
+        item = self._collection.find_one_and_update(
+            {'_id': id}, {'$set': new_item},
+            return_document=pymongo.ReturnDocument.AFTER
+        )
+
+        self._logger.trace(correlation_id, "Updated partially in %s with id = %s", self._collection_name, id)
 
         item = self._convert_to_public(item)
         return item
 
     # The method must return deleted value to be able to do clean up like removing references
-    def delete_by_id(self, correlation_id, id):
+    def delete_by_id(self, correlation_id: Optional[str], id: Any) -> T:
         """
         Deleted a data item by it's unique id.
 
@@ -221,10 +250,13 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
         :return: a deleted item.
         """
         item = self._collection.find_one_and_delete({'_id': id})
+
+        self._logger.trace(correlation_id, "Deleted from %s with id = %s", self._collection_name, id)
+
         item = self._convert_to_public(item)
         return item
 
-    def delete_by_ids(self, correlation_id, ids):
+    def delete_by_ids(self, correlation_id: Optional[str], ids: List[Any]):
         """
         Deletes multiple data items by their unique ids.
 

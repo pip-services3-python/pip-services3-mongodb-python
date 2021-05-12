@@ -10,22 +10,26 @@
 """
 import random
 import threading
+from typing import List, Any, Optional, TypeVar
 
 from pip_services3_commons.config import ConfigParams
 from pip_services3_commons.config import IConfigurable
 from pip_services3_commons.data import PagingParams, DataPage
 from pip_services3_commons.errors import ConnectionException
-from pip_services3_commons.refer import IReferenceable, DependencyResolver, IReferences
+from pip_services3_commons.refer import IReferenceable, DependencyResolver, IReferences, IUnreferenceable
 from pip_services3_commons.run import IOpenable, ICleanable
 from pip_services3_components.log import CompositeLogger
 
-from pip_services3_mongodb.persistence.MongoDbConnection import MongoDbConnection
+from pip_services3_mongodb.connect.MongoDbConnection import MongoDbConnection
+from .MongoDbIndex import MongoDbIndex
 from ..connect.MongoDbConnectionResolver import MongoDbConnectionResolver
 
 filtered = filter
 
+T = TypeVar('T')  # Declare type variable
 
-class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
+
+class MongoDbPersistence(IReferenceable, IUnreferenceable, IConfigurable, IOpenable, ICleanable):
     """
     Abstract persistence component that stores data in MongoDB
     using the official MongoDB driver.
@@ -49,9 +53,14 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
         - options:
             - max_pool_size:             (optional) maximum connection pool size (default: 2)
             - keep_alive:                (optional) enable connection keep alive (default: true)
-            - connect_timeout:           (optional) connection timeout in milliseconds (default: 5 sec)
+            - connect_timeout:           (optional) connection timeout in milliseconds (default: 5000)
+            - socket_timeout:            (optional) socket timeout in milliseconds (default: 360000)
             - auto_reconnect:            (optional) enable auto reconnection (default: true)
+            - reconnect_interval:        (optional) reconnection interval in milliseconds (default: 1000)
             - max_page_size:             (optional) maximum page size (default: 100)
+            - replica_set:               (optional) name of replica set
+            - ssl:                       (optional) enable SSL connection (default: false)
+            - auth_source:               (optional) authentication source
             - debug:                     (optional) enable debug output (default: false).
 
     ### References ###
@@ -88,7 +97,7 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
 
         print (item)
     """
-    _default_config = ConfigParams.from_tuples(
+    __default_config = ConfigParams.from_tuples(
         "collection", None,
         "dependencies.connection", "*:connection:mongodb:*:1.0",
 
@@ -99,63 +108,59 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
 
         "options.max_pool_size", 2,
         "options.keep_alive", 1,
-        "options.connect_timeout", 30000,
-        "options.socket_timeout", 5000,
+        "options.connect_timeout", 5000,
+        "options.socket_timeout", 30000,
         "options.auto_reconnect", True,
         "options.max_page_size", 100,
         "options.debug", True
     )
 
-    _lock = None
-    _connection_resolver = None
-    _options = None
-
-    _config: ConfigParams = None
-    _references: IReferences = None
-    _opened = False
-    _localConnection = False
-    _indexes = []
-
-    # The logger.
-    _logger = None
-    # The dependency resolver.
-    _dependencyResolver = DependencyResolver(_default_config)
-    # The MongoDB database name.
-    _database_name = None
-    # The MongoDB colleciton object.
-    _collection_name = None
-    # The MongoDb database object.
-    _database = None
-    # The MongoDb collection object.
-    _collection = None
-    # The MongoDB connection object.
-    _client = None
-    # The MongoDB connection component.
-    _connection = None
-
-    _max_page_size = 100
-
-    def __init__(self, collection=None):
+    def __init__(self, collection: str = None):
         """
         Creates a new instance of the persistence component.
 
         :param collection: (optional) a collection name.
         """
-        self._lock = threading.Lock()
-        self._logger = CompositeLogger()
-        self._connection_resolver = MongoDbConnectionResolver()
-        self._options = ConfigParams()
+        self._lock: threading.Lock = threading.Lock()
+        self._connection_resolver: MongoDbConnectionResolver = MongoDbConnectionResolver()
+        self._options: ConfigParams = ConfigParams()
 
-        self._collection_name = collection
+        # The logger.
+        self._logger: CompositeLogger = CompositeLogger()
 
-    def configure(self, config):
+        # The dependency resolver.
+        self._dependencyResolver = DependencyResolver(self.__default_config)
+
+        # The MongoDB database name.
+        self._database_name: str = None
+        # The MongoDb database object.
+        self._db: Any = None
+        # The MongoDb collection object.
+        self._collection: Any = None
+        # The MongoDB connection object.
+        self._client: Any = None
+        # The MongoDB connection component.
+        self._connection: MongoDbConnection = None
+
+        self._max_page_size = 100
+
+        # The MongoDB colleciton object.
+        self._collection_name: str = collection
+
+        self.__config: ConfigParams = None
+        self.__references: IReferences = None
+        self.__opened = False
+        self.__local_connection = False
+        self.__indexes: List[MongoDbIndex] = []
+
+    def configure(self, config: ConfigParams):
         """
         Configures component by passing configuration parameters.
 
         :param config: configuration parameters to be set.
         """
-        config = config.set_defaults(self._default_config)
-        self._config = config
+        config = config.set_defaults(self.__default_config)
+        self.__config = config
 
         self._logger.configure(config)
         self._connection_resolver.configure(config)
@@ -165,13 +170,13 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
         self._collection_name = config.get_as_string_with_default('collection', self._collection_name)
         self._options = self._options.override(config.get_section('options'))
 
-    def set_references(self, references):
+    def set_references(self, references: IReferences):
         """
         Sets references to dependent components.
 
         :param references: references to locate the component dependencies.
         """
-        self._references = references
+        self.__references = references
         self._logger.set_references(references)
         self._connection_resolver.set_references(references)
 
@@ -181,9 +186,9 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
         # Or create a local one
         if self._connection is None:
             self._connection = self.__create_connection()
-            self._localConnection = True
+            self.__local_connection = True
         else:
-            self._localConnection = False
+            self.__local_connection = False
 
     def unset_references(self):
         """
@@ -191,36 +196,39 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
         """
         self._connection = None
 
-    def __create_connection(self):
+    def __create_connection(self) -> MongoDbConnection:
         connection = MongoDbConnection()
 
-        if self._config:
-            connection.configure(self._config)
+        if self.__config:
+            connection.configure(self.__config)
 
-        if self._references:
-            connection.set_references(self._references)
+        if self.__references:
+            connection.set_references(self.__references)
 
         return connection
 
-    def _ensure_index(self, keys, options=None):
+    def _ensure_index(self, keys: Any, options: Any = None):
+        """
+        Adds index definition to create it on opening
+
+        :param keys: index keys (fields)
+        :param options: index options
+        """
         if not keys:
             return
-        self._indexes.append({
-            'keys': keys,
-            'options': options
-        })
+        self.__indexes.append(MongoDbIndex(keys, options))
 
     def _clear_schema(self):
         """
         Clears all auto-created objects
         """
-        self._indexes = []
+        self.__indexes = []
 
     def _define_schema(self):
         # TODO: override in child class
         pass
 
-    def _convert_to_public(self, value):
+    def _convert_to_public(self, value: Any) -> Any:
         """
         Converts object value from internal to public format.
 
@@ -233,7 +241,7 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
         value.pop('_id', None)
         return value
 
-    def _convert_from_public(self, value):
+    def _convert_from_public(self, value: Any) -> Any:
         """
         Convert object value from public to internal format.
 
@@ -243,26 +251,26 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
         """
         return value
 
-    def is_opened(self):
+    def is_open(self) -> bool:
         """
         Checks if the component is opened.
 
         :return: true if the component has been opened and false otherwise.
         """
-        return self._opened
+        return self.__opened
 
-    def open(self, correlation_id):
+    def open(self, correlation_id: Optional[str]):
         """
         Opens the component.
 
         :param correlation_id: (optional) transaction id to trace execution through call chain.
         """
-        if self._opened:
+        if self.__opened:
             return
 
         if self._connection is None:
             self._connection = self.__create_connection()
-            self._localConnection = True
+            self.__local_connection = True
 
         uri = self._connection_resolver.resolve(correlation_id)
 
@@ -277,7 +285,7 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
         self._logger.debug(correlation_id, "Connecting to mongodb database ")
 
         try:
-            if self._localConnection:
+            if self.__local_connection:
                 self._connection.open(correlation_id)
 
             kwargs = {
@@ -289,16 +297,16 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
             }
             kwargs = self.__del_none_objects(kwargs)
             self._client = self._connection.get_connection()
-            self._database = self._connection.get_database()
+            self._db = self._connection.get_database()
             self._database_name = self._connection.get_database_name()
 
             # Define database schema
             self._define_schema()
 
-            self._collection = self._database.get_collection(self._collection_name)
-            self._opened = True
+            self._collection = self._db.get_collection(self._collection_name)
+            self.__opened = True
         except Exception as ex:
-            self._opened = False
+            self.__opened = False
             raise ConnectionException(correlation_id, "CONNECT_FAILED", "Connection to mongodb failed") \
                 .with_cause(ex)
 
@@ -309,18 +317,18 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
                 new_settings[k] = settings[k]
         return new_settings
 
-    def close(self, correlation_id):
+    def close(self, correlation_id: Optional[str]):
         """
         Closes component and frees used resources.
 
         :param correlation_id: (optional) transaction id to trace execution through call chain.
         """
         try:
-            if self._client != None:
+            if self._client is not None:
                 self._client.close()
 
             self._collection = None
-            self._database = None
+            self._db = None
             self._client = None
 
             self._logger.debug(correlation_id, "Disconnected from mongodb database " + str(self._database_name))
@@ -328,18 +336,18 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
             raise ConnectionException(None, 'DISCONNECT_FAILED', 'Disconnect from mongodb failed: ' + str(ex)) \
                 .with_cause(ex)
 
-    def clear(self, correlation_id):
+    def clear(self, correlation_id: Optional[str]):
         """
         Clears component state.
 
         :param correlation_id: (optional) transaction id to trace execution through call chain.
         """
-        if self._collection_name == None:
+        if self._collection_name is None:
             raise Exception("Collection name is not defined")
 
-        self._database.drop_collection(self._collection_name)
+        self._db.drop_collection(self._collection_name)
 
-    def create(self, correlation_id, item):
+    def create(self, correlation_id: Optional[str], item: T) -> T:
         """
         Creates a data item.
 
@@ -358,7 +366,7 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
         item = self._convert_to_public(item)
         return item
 
-    def delete_by_filter(self, correlation_id, filter):
+    def delete_by_filter(self, correlation_id: Optional[str], filter: Any):
         """
         Deletes data items that match to a given filter.
 
@@ -369,9 +377,11 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
 
         :param filter: (optional) a filter function to filter items.
         """
-        self._collection.remove(filter)
+        result = self._collection.delete_many(filter)
+        count = 0 if result is None else result.deleted_count
+        self._logger.trace(correlation_id, "Deleted %d items from %s", count, self._collection_name)
 
-    def get_one_random(self, correlation_id, filter):
+    def get_one_random(self, correlation_id: Optional[str], filter: Any) -> T:
         """
         Gets a random item from items that match to a given filter.
 
@@ -382,18 +392,26 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
 
         :return: a random item.
         """
-        count = self._connection.find(filter).count()
+        count = self._collection.find(filter).count()
 
         pos = random.randint(0, count)
 
-        statement = self._connection.find(filter).skip(pos).limit(1)
+        statement = self._collection.find(filter).skip(pos).limit(1)
         for item in statement:
+
+            if item is None:
+                self._logger.trace(correlation_id, "Random item wasn't found from %s", self._collection_name)
+            else:
+                self._logger.trace(correlation_id, "Retrieved random item from %s", self._collection_name)
+
             item = self._convert_to_public(item)
+
             return item
 
         return None
 
-    def get_page_by_filter(self, correlation_id, filter, paging, sort=None, select=None):
+    def get_page_by_filter(self, correlation_id: Optional[str], filter: Any, paging: PagingParams,
+                           sort: Any = None, select: Any = None) -> DataPage:
         """
         Gets a page of data items retrieved by a given filter and sorted according to sort parameters.
 
@@ -413,7 +431,7 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
         :return: a data page of result by filter
         """
         # Adjust max item count based on configuration
-        paging = paging if paging != None else PagingParams()
+        paging = paging if paging is not None else PagingParams()
         skip = paging.get_skip(-1)
         take = paging.get_take(self._max_page_size)
 
@@ -423,9 +441,9 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
         if skip >= 0:
             statement = statement.skip(skip)
         statement = statement.limit(take)
-        if sort != None:
+        if sort is not None:
             statement = statement.sort(sort)
-        if select != None:
+        if select is not None:
             statement = statement.select(select)
 
         # Retrive page items
@@ -434,6 +452,9 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
             item = self._convert_to_public(item)
             items.append(item)
 
+        if items is not None:
+            self._logger.trace(correlation_id, "Retrieved %d from %s", len(items), self._collection_name)
+
         # Calculate total if needed
         total = None
         if paging.total:
@@ -441,7 +462,8 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
 
         return DataPage(items, total)
 
-    def get_list_by_filter(self, correlation_id, filter, sort=None, select=None):
+    def get_list_by_filter(self, correlation_id: Optional[str], filter: Any,
+                           sort: Any = None, select: Any = None) -> List[T]:
         """
         Gets a list of data items retrieved by a given filter and sorted according to sort parameters.
 
@@ -461,9 +483,9 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
         # Configure statement
         statement = self._collection.find(filter)
 
-        if sort != None:
+        if sort is not None:
             statement = statement.sort(sort)
-        if select != None:
+        if select is not None:
             statement = statement.select(select)
 
         # Retrive page items
@@ -472,9 +494,25 @@ class MongoDbPersistence(IReferenceable, IConfigurable, IOpenable, ICleanable):
             item = self._convert_to_public(item)
             items.append(item)
 
+        if items is not None:
+            self._logger.trace(correlation_id, "Retrieved %d from %s", len(items), self._collection_name)
+
         return items
 
-    def get_count_by_filter(self, correlation_id: str, filter) -> int:
-        count = self._connection.find(filter).count()
+    def get_count_by_filter(self, correlation_id: Optional[str], filter: Any) -> int:
+        """
+        Gets a number of data items retrieved by a given filter.
+
+        This method shall be called by a public get_count_by_filter method from child class that
+        receives FilterParams and converts them into a filter function.
+
+        :param correlation_id: (optional) transaction id to trace execution through call chain.
+        :param filter: (optional) a filter JSON object
+        :return: a number of filtered items.
+        """
+        count = self._collection.find(filter).count()
+
+        if count is not None:
+            self._logger.trace(correlation_id, "Counted %d items in %s", count, self._collection_name)
 
         return count
