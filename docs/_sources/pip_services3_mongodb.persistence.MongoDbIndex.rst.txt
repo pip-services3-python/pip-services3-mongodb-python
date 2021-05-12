@@ -1,0 +1,7 @@
+pip\_services3\_mongodb.persistence.MongoDbIndex module
+=======================================================
+
+.. automodule:: pip_services3_mongodb.persistence.MongoDbIndex
+   :members:
+   :undoc-members:
+   :show-inheritance:

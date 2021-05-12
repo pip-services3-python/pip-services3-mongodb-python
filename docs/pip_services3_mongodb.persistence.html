@@ -180,7 +180,7 @@
 <li class="toctree-l2"><a class="reference internal" href="pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence.html#pip-services3-mongodb-persistence-identifiablemongodbpersistence">pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="pip_services3_mongodb.persistence.MongoDbConnection.html">pip_services3_mongodb.persistence.MongoDbConnection module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pip_services3_mongodb.persistence.MongoDbIndex.html">pip_services3_mongodb.persistence.MongoDbIndex module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pip_services3_mongodb.persistence.MongoDbPersistence.html">pip_services3_mongodb.persistence.MongoDbPersistence module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pip_services3_mongodb.persistence.MongoDbPersistence.html#pip-services3-mongodb-persistence-mongodbpersistence">pip_services3_mongodb.persistence.MongoDbPersistence</a></li>
 </ul>
@@ -203,7 +203,7 @@
 </dl>
 <dl class="py class">
 <dt id="pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence">
-<em class="property">class </em><code class="sig-prename descclassname">pip_services3_mongodb.persistence.</code><code class="sig-name descname">IdentifiableMongoDbPersistence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">collection</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pip_services3_mongodb.persistence.</code><code class="sig-name descname">IdentifiableMongoDbPersistence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">collection</span><span class="p">:</span> <span class="n"><a class="reference external" href="http://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pip_services3_mongodb.persistence.MongoDbPersistence.html#pip_services3_mongodb.persistence.MongoDbPersistence.MongoDbPersistence" title="pip_services3_mongodb.persistence.MongoDbPersistence.MongoDbPersistence"><code class="xref py py-class docutils literal notranslate"><span class="pre">pip_services3_mongodb.persistence.MongoDbPersistence.MongoDbPersistence</span></code></a></p>
 <p>Abstract persistence component that stores data in MongoDB
 and implements a number of CRUD operations over data items with unique ids.
@@ -213,12 +213,12 @@ The data items must implement IIdentifiable interface.</p>
 All other operations can be used out of the box.</p>
 <p>In complex scenarios child classes can implement additional operations by
 accessing <strong>self.__collection</strong> and <strong>self.__model</strong> properties.</p>
-<dl class="simple">
-<dt>### Configuration parameters ###</dt><dd><ul class="simple">
-<li><p>collection:                  (optional) MongoDB collection name</p></li>
+<p>### Configuration parameters ###</p>
+<blockquote>
+<div><ul class="simple">
 <li><dl class="simple">
 <dt>connection(s):</dt><dd><ul>
-<li><p>discovery_key:             (optional) a key to retrieve the connection from IDiscovery</p></li>
+<li><p>discovery_key:             (optional) a key to retrieve the connection from <a class="reference external" href="https://pip-services3-python.github.io/pip-services3-components-python/pip_services3_components.connect.IDiscovery.html#pip_services3_components.connect.IDiscovery.IDiscovery" title="(in pip-services3-components)"><code class="xref py py-class docutils literal notranslate"><span class="pre">IDiscovery</span></code></a></p></li>
 <li><p>host:                      host name or IP address</p></li>
 <li><p>port:                      port number (default: 27017)</p></li>
 <li><p>uri:                       resource URI or connection string with all parameters in it</p></li>
@@ -228,7 +228,7 @@ accessing <strong>self.__collection</strong> and <strong>self.__model</strong> p
 </li>
 <li><dl class="simple">
 <dt>credential(s):</dt><dd><ul>
-<li><p>store_key:                 (optional) a key to retrieve the credentials from ICredentialStore</p></li>
+<li><p>store_key:                 (optional) a key to retrieve the credentials from <a class="reference external" href="https://pip-services3-python.github.io/pip-services3-components-python/pip_services3_components.auth.ICredentialStore.html#pip_services3_components.auth.ICredentialStore.ICredentialStore" title="(in pip-services3-components)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ICredentialStore</span></code></a></p></li>
 <li><p>username:                  (optional) user name</p></li>
 <li><p>password:                  (optional) user password</p></li>
 </ul>
@@ -239,16 +239,22 @@ accessing <strong>self.__collection</strong> and <strong>self.__model</strong> p
 <dt>options:</dt><dd><ul>
 <li><p>max_pool_size:             (optional) maximum connection pool size (default: 2)</p></li>
 <li><p>keep_alive:                (optional) enable connection keep alive (default: true)</p></li>
-<li><p>connect_timeout:           (optional) connection timeout in milliseconds (default: 5 sec)</p></li>
+<li><p>connect_timeout:           (optional) connection timeout in milliseconds (default: 5000)</p></li>
+<li><p>socket_timeout:            (optional) socket timeout in milliseconds (default: 360000)</p></li>
 <li><p>auto_reconnect:            (optional) enable auto reconnection (default: true)</p></li>
+<li><p>reconnect_interval:        (optional) reconnection interval in milliseconds (default: 1000)</p></li>
 <li><p>max_page_size:             (optional) maximum page size (default: 100)</p></li>
+<li><p>replica_set:               (optional) name of replica set</p></li>
+<li><p>ssl:                       (optional) enable SSL connection (default: false)</p></li>
+<li><p>auth_source:               (optional) authentication source</p></li>
 <li><p>debug:                     (optional) enable debug output (default: false).</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-</dd>
+</div></blockquote>
+<dl class="simple">
 <dt>### References ###</dt><dd><ul class="simple">
 <li><p><cite>*:logger:*:*:1.0</cite>           (optional) <a class="reference external" href="https://pip-services3-python.github.io/pip-services3-components-python/pip_services3_components.log.ILogger.html#pip_services3_components.log.ILogger.ILogger" title="(in pip-services3-components)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ILogger</span></code></a> components to pass log messages components to pass log messages</p></li>
 <li><p><cite>*:discovery:*:*:1.0</cite>        (optional) <a class="reference external" href="https://pip-services3-python.github.io/pip-services3-components-python/pip_services3_components.connect.IDiscovery.html#pip_services3_components.connect.IDiscovery.IDiscovery" title="(in pip-services3-components)"><code class="xref py py-class docutils literal notranslate"><span class="pre">IDiscovery</span></code></a> services</p></li>
@@ -279,7 +285,7 @@ accessing <strong>self.__collection</strong> and <strong>self.__model</strong> p
 </div>
 <dl class="py method">
 <dt id="pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence.create">
-<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span></em>, <em class="sig-param"><span class="n">item</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence.create" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference external" href="http://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">item</span><span class="p">:</span> <span class="n">T</span></em><span class="sig-paren">)</span> &#x2192; T<a class="headerlink" href="#pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a data item.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -296,7 +302,7 @@ accessing <strong>self.__collection</strong> and <strong>self.__model</strong> p
 
 <dl class="py method">
 <dt id="pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence.delete_by_id">
-<code class="sig-name descname">delete_by_id</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span></em>, <em class="sig-param"><span class="n">id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence.delete_by_id" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">delete_by_id</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference external" href="http://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">id</span><span class="p">:</span> <span class="n">Any</span></em><span class="sig-paren">)</span> &#x2192; T<a class="headerlink" href="#pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence.delete_by_id" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deleted a data item by it’s unique id.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -313,7 +319,7 @@ accessing <strong>self.__collection</strong> and <strong>self.__model</strong> p
 
 <dl class="py method">
 <dt id="pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence.delete_by_ids">
-<code class="sig-name descname">delete_by_ids</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span></em>, <em class="sig-param"><span class="n">ids</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence.delete_by_ids" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">delete_by_ids</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference external" href="http://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">ids</span><span class="p">:</span> <span class="n">List<span class="p">[</span>Any<span class="p">]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence.delete_by_ids" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deletes multiple data items by their unique ids.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -327,7 +333,7 @@ accessing <strong>self.__collection</strong> and <strong>self.__model</strong> p
 
 <dl class="py method">
 <dt id="pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence.get_list_by_ids">
-<code class="sig-name descname">get_list_by_ids</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span></em>, <em class="sig-param"><span class="n">ids</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence.get_list_by_ids" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_list_by_ids</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference external" href="http://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">ids</span><span class="p">:</span> <span class="n">List<span class="p">[</span>Any<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>T<span class="p">]</span><a class="headerlink" href="#pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence.get_list_by_ids" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a list of data items retrieved by given unique ids.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -344,7 +350,7 @@ accessing <strong>self.__collection</strong> and <strong>self.__model</strong> p
 
 <dl class="py method">
 <dt id="pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence.get_one_by_id">
-<code class="sig-name descname">get_one_by_id</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span></em>, <em class="sig-param"><span class="n">id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence.get_one_by_id" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_one_by_id</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference external" href="http://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">id</span><span class="p">:</span> <span class="n">Any</span></em><span class="sig-paren">)</span> &#x2192; T<a class="headerlink" href="#pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence.get_one_by_id" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a data item by its unique id.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -361,7 +367,7 @@ accessing <strong>self.__collection</strong> and <strong>self.__model</strong> p
 
 <dl class="py method">
 <dt id="pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence.set">
-<code class="sig-name descname">set</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span></em>, <em class="sig-param"><span class="n">item</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence.set" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference external" href="http://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">item</span><span class="p">:</span> <span class="n">T</span></em><span class="sig-paren">)</span> &#x2192; T<a class="headerlink" href="#pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence.set" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets a data item. If the data item exists it updates it, otherwise it create a new data item.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -378,13 +384,13 @@ accessing <strong>self.__collection</strong> and <strong>self.__model</strong> p
 
 <dl class="py method">
 <dt id="pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence.update">
-<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span></em>, <em class="sig-param"><span class="n">new_item</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence.update" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference external" href="http://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">item</span><span class="p">:</span> <span class="n">T</span></em><span class="sig-paren">)</span> &#x2192; T<a class="headerlink" href="#pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates a data item.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>correlation_id</strong> – (optional) transaction id to trace execution through call chain.</p></li>
-<li><p><strong>new_item</strong> – an item to be updated.</p></li>
+<li><p><strong>item</strong> – an item to be updated.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -395,7 +401,7 @@ accessing <strong>self.__collection</strong> and <strong>self.__model</strong> p
 
 <dl class="py method">
 <dt id="pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence.update_partially">
-<code class="sig-name descname">update_partially</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span></em>, <em class="sig-param"><span class="n">id</span></em>, <em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence.update_partially" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">update_partially</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference external" href="http://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">id</span><span class="p">:</span> <span class="n">Any</span></em>, <em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://pip-services3-python.github.io/pip-services3-commons-python/pip_services3_commons.data.AnyValueMap.html#pip_services3_commons.data.AnyValueMap.AnyValueMap" title="(in pip-services3-commons)">pip_services3_commons.data.AnyValueMap.AnyValueMap</a></span></em><span class="sig-paren">)</span> &#x2192; T<a class="headerlink" href="#pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence.update_partially" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates only few selected fields in a data item.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -415,8 +421,8 @@ accessing <strong>self.__collection</strong> and <strong>self.__model</strong> p
 
 <dl class="py class">
 <dt id="pip_services3_mongodb.persistence.MongoDbPersistence">
-<em class="property">class </em><code class="sig-prename descclassname">pip_services3_mongodb.persistence.</code><code class="sig-name descname">MongoDbPersistence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">collection</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbPersistence" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://pip-services3-python.github.io/pip-services3-commons-python/pip_services3_commons.refer.IReferenceable.html#pip_services3_commons.refer.IReferenceable.IReferenceable" title="(in pip-services3-commons)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pip_services3_commons.refer.IReferenceable.IReferenceable</span></code></a>, <a class="reference external" href="https://pip-services3-python.github.io/pip-services3-commons-python/pip_services3_commons.config.IConfigurable.html#pip_services3_commons.config.IConfigurable.IConfigurable" title="(in pip-services3-commons)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pip_services3_commons.config.IConfigurable.IConfigurable</span></code></a>, <a class="reference external" href="https://pip-services3-python.github.io/pip-services3-commons-python/pip_services3_commons.run.IOpenable.html#pip_services3_commons.run.IOpenable.IOpenable" title="(in pip-services3-commons)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pip_services3_commons.run.IOpenable.IOpenable</span></code></a>, <a class="reference external" href="https://pip-services3-python.github.io/pip-services3-commons-python/pip_services3_commons.run.ICleanable.html#pip_services3_commons.run.ICleanable.ICleanable" title="(in pip-services3-commons)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pip_services3_commons.run.ICleanable.ICleanable</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">pip_services3_mongodb.persistence.</code><code class="sig-name descname">MongoDbPersistence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">collection</span><span class="p">:</span> <span class="n"><a class="reference external" href="http://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbPersistence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://pip-services3-python.github.io/pip-services3-commons-python/pip_services3_commons.refer.IReferenceable.html#pip_services3_commons.refer.IReferenceable.IReferenceable" title="(in pip-services3-commons)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pip_services3_commons.refer.IReferenceable.IReferenceable</span></code></a>, <a class="reference external" href="https://pip-services3-python.github.io/pip-services3-commons-python/pip_services3_commons.refer.IUnreferenceable.html#pip_services3_commons.refer.IUnreferenceable.IUnreferenceable" title="(in pip-services3-commons)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pip_services3_commons.refer.IUnreferenceable.IUnreferenceable</span></code></a>, <a class="reference external" href="https://pip-services3-python.github.io/pip-services3-commons-python/pip_services3_commons.config.IConfigurable.html#pip_services3_commons.config.IConfigurable.IConfigurable" title="(in pip-services3-commons)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pip_services3_commons.config.IConfigurable.IConfigurable</span></code></a>, <a class="reference external" href="https://pip-services3-python.github.io/pip-services3-commons-python/pip_services3_commons.run.IOpenable.html#pip_services3_commons.run.IOpenable.IOpenable" title="(in pip-services3-commons)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pip_services3_commons.run.IOpenable.IOpenable</span></code></a>, <a class="reference external" href="https://pip-services3-python.github.io/pip-services3-commons-python/pip_services3_commons.run.ICleanable.html#pip_services3_commons.run.ICleanable.ICleanable" title="(in pip-services3-commons)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pip_services3_commons.run.ICleanable.ICleanable</span></code></a></p>
 <p>Abstract persistence component that stores data in MongoDB
 using the official MongoDB driver.</p>
 <p>This is the most basic persistence component that is only
@@ -449,9 +455,14 @@ accessing <strong>self.__collection</strong> or <strong>self.__model</strong> pr
 <dt>options:</dt><dd><ul>
 <li><p>max_pool_size:             (optional) maximum connection pool size (default: 2)</p></li>
 <li><p>keep_alive:                (optional) enable connection keep alive (default: true)</p></li>
-<li><p>connect_timeout:           (optional) connection timeout in milliseconds (default: 5 sec)</p></li>
+<li><p>connect_timeout:           (optional) connection timeout in milliseconds (default: 5000)</p></li>
+<li><p>socket_timeout:            (optional) socket timeout in milliseconds (default: 360000)</p></li>
 <li><p>auto_reconnect:            (optional) enable auto reconnection (default: true)</p></li>
+<li><p>reconnect_interval:        (optional) reconnection interval in milliseconds (default: 1000)</p></li>
 <li><p>max_page_size:             (optional) maximum page size (default: 100)</p></li>
+<li><p>replica_set:               (optional) name of replica set</p></li>
+<li><p>ssl:                       (optional) enable SSL connection (default: false)</p></li>
+<li><p>auth_source:               (optional) authentication source</p></li>
 <li><p>debug:                     (optional) enable debug output (default: false).</p></li>
 </ul>
 </dd>
@@ -495,7 +506,7 @@ accessing <strong>self.__collection</strong> or <strong>self.__model</strong> pr
 </div>
 <dl class="py method">
 <dt id="pip_services3_mongodb.persistence.MongoDbPersistence.clear">
-<code class="sig-name descname">clear</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbPersistence.clear" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">clear</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference external" href="http://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbPersistence.clear" title="Permalink to this definition">¶</a></dt>
 <dd><p>Clears component state.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -506,7 +517,7 @@ accessing <strong>self.__collection</strong> or <strong>self.__model</strong> pr
 
 <dl class="py method">
 <dt id="pip_services3_mongodb.persistence.MongoDbPersistence.close">
-<code class="sig-name descname">close</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbPersistence.close" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">close</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference external" href="http://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbPersistence.close" title="Permalink to this definition">¶</a></dt>
 <dd><p>Closes component and frees used resources.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -517,7 +528,7 @@ accessing <strong>self.__collection</strong> or <strong>self.__model</strong> pr
 
 <dl class="py method">
 <dt id="pip_services3_mongodb.persistence.MongoDbPersistence.configure">
-<code class="sig-name descname">configure</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">config</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbPersistence.configure" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">configure</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">config</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://pip-services3-python.github.io/pip-services3-commons-python/pip_services3_commons.config.ConfigParams.html#pip_services3_commons.config.ConfigParams.ConfigParams" title="(in pip-services3-commons)">pip_services3_commons.config.ConfigParams.ConfigParams</a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbPersistence.configure" title="Permalink to this definition">¶</a></dt>
 <dd><p>Configures component by passing configuration parameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -528,7 +539,7 @@ accessing <strong>self.__collection</strong> or <strong>self.__model</strong> pr
 
 <dl class="py method">
 <dt id="pip_services3_mongodb.persistence.MongoDbPersistence.create">
-<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span></em>, <em class="sig-param"><span class="n">item</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbPersistence.create" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference external" href="http://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">item</span><span class="p">:</span> <span class="n">T</span></em><span class="sig-paren">)</span> &#x2192; T<a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbPersistence.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a data item.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -545,7 +556,7 @@ accessing <strong>self.__collection</strong> or <strong>self.__model</strong> pr
 
 <dl class="py method">
 <dt id="pip_services3_mongodb.persistence.MongoDbPersistence.delete_by_filter">
-<code class="sig-name descname">delete_by_filter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span></em>, <em class="sig-param"><span class="n">filter</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbPersistence.delete_by_filter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">delete_by_filter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference external" href="http://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">filter</span><span class="p">:</span> <span class="n">Any</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbPersistence.delete_by_filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deletes data items that match to a given filter.</p>
 <p>This method shall be called by a public <a class="reference internal" href="#pip_services3_mongodb.persistence.MongoDbPersistence.delete_by_filter" title="pip_services3_mongodb.persistence.MongoDbPersistence.delete_by_filter"><code class="xref py py-func docutils literal notranslate"><span class="pre">delete_by_filter()</span></code></a> method from child class that
 receives <a class="reference external" href="https://pip-services3-python.github.io/pip-services3-commons-python/pip_services3_commons.data.FilterParams.html#pip_services3_commons.data.FilterParams.FilterParams" title="(in pip-services3-commons)"><code class="xref py py-class docutils literal notranslate"><span class="pre">FilterParams</span></code></a> and converts them into a filter function.</p>
@@ -561,12 +572,26 @@ receives <a class="reference external" href="https://pip-services3-python.github
 
 <dl class="py method">
 <dt id="pip_services3_mongodb.persistence.MongoDbPersistence.get_count_by_filter">
-<code class="sig-name descname">get_count_by_filter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span><span class="p">:</span> <span class="n"><a class="reference external" href="http://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></span></em>, <em class="sig-param"><span class="n">filter</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="http://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)">int</a><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbPersistence.get_count_by_filter" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">get_count_by_filter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference external" href="http://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">filter</span><span class="p">:</span> <span class="n">Any</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="http://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)">int</a><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbPersistence.get_count_by_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a number of data items retrieved by a given filter.</p>
+<p>This method shall be called by a public get_count_by_filter method from child class that
+receives FilterParams and converts them into a filter function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>correlation_id</strong> – (optional) transaction id to trace execution through call chain.</p></li>
+<li><p><strong>filter</strong> – (optional) a filter JSON object</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a number of filtered items.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="pip_services3_mongodb.persistence.MongoDbPersistence.get_list_by_filter">
-<code class="sig-name descname">get_list_by_filter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span></em>, <em class="sig-param"><span class="n">filter</span></em>, <em class="sig-param"><span class="n">sort</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">select</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbPersistence.get_list_by_filter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_list_by_filter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference external" href="http://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">filter</span><span class="p">:</span> <span class="n">Any</span></em>, <em class="sig-param"><span class="n">sort</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">select</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>T<span class="p">]</span><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbPersistence.get_list_by_filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a list of data items retrieved by a given filter and sorted according to sort parameters.</p>
 <p>This method shall be called by a public get_list_by_filter method from child class that
 receives FilterParams and converts them into a filter function.</p>
@@ -587,7 +612,7 @@ receives FilterParams and converts them into a filter function.</p>
 
 <dl class="py method">
 <dt id="pip_services3_mongodb.persistence.MongoDbPersistence.get_one_random">
-<code class="sig-name descname">get_one_random</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span></em>, <em class="sig-param"><span class="n">filter</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbPersistence.get_one_random" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_one_random</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference external" href="http://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">filter</span><span class="p">:</span> <span class="n">Any</span></em><span class="sig-paren">)</span> &#x2192; T<a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbPersistence.get_one_random" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a random item from items that match to a given filter.</p>
 <p>This method shall be called by a public get_one_random method from child class
 that receives FilterParams and converts them into a filter function.</p>
@@ -603,7 +628,7 @@ that receives FilterParams and converts them into a filter function.</p>
 
 <dl class="py method">
 <dt id="pip_services3_mongodb.persistence.MongoDbPersistence.get_page_by_filter">
-<code class="sig-name descname">get_page_by_filter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span></em>, <em class="sig-param"><span class="n">filter</span></em>, <em class="sig-param"><span class="n">paging</span></em>, <em class="sig-param"><span class="n">sort</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">select</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbPersistence.get_page_by_filter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_page_by_filter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference external" href="http://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">filter</span><span class="p">:</span> <span class="n">Any</span></em>, <em class="sig-param"><span class="n">paging</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://pip-services3-python.github.io/pip-services3-commons-python/pip_services3_commons.data.PagingParams.html#pip_services3_commons.data.PagingParams.PagingParams" title="(in pip-services3-commons)">pip_services3_commons.data.PagingParams.PagingParams</a></span></em>, <em class="sig-param"><span class="n">sort</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">select</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://pip-services3-python.github.io/pip-services3-commons-python/pip_services3_commons.data.DataPage.html#pip_services3_commons.data.DataPage.DataPage" title="(in pip-services3-commons)">pip_services3_commons.data.DataPage.DataPage</a><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbPersistence.get_page_by_filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a page of data items retrieved by a given filter and sorted according to sort parameters.</p>
 <p>This method shall be called by a public get_page_by_filter method from child class that
 receives FilterParams and converts them into a filter function.</p>
@@ -625,7 +650,7 @@ receives FilterParams and converts them into a filter function.</p>
 
 <dl class="py method">
 <dt id="pip_services3_mongodb.persistence.MongoDbPersistence.is_open">
-<code class="sig-name descname">is_open</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbPersistence.is_open" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">is_open</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="http://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbPersistence.is_open" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if the component is opened.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -636,7 +661,7 @@ receives FilterParams and converts them into a filter function.</p>
 
 <dl class="py method">
 <dt id="pip_services3_mongodb.persistence.MongoDbPersistence.open">
-<code class="sig-name descname">open</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbPersistence.open" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">open</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">correlation_id</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference external" href="http://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbPersistence.open" title="Permalink to this definition">¶</a></dt>
 <dd><p>Opens the component.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -647,7 +672,7 @@ receives FilterParams and converts them into a filter function.</p>
 
 <dl class="py method">
 <dt id="pip_services3_mongodb.persistence.MongoDbPersistence.set_references">
-<code class="sig-name descname">set_references</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">references</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbPersistence.set_references" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_references</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">references</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://pip-services3-python.github.io/pip-services3-commons-python/pip_services3_commons.refer.IReferences.html#pip_services3_commons.refer.IReferences.IReferences" title="(in pip-services3-commons)">pip_services3_commons.refer.IReferences.IReferences</a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pip_services3_mongodb.persistence.MongoDbPersistence.set_references" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets references to dependent components.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

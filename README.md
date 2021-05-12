@@ -30,11 +30,11 @@ As an example, lets create persistence for the following data object.
 ```python
 from pip_services3_commons.data import IIdentifiable
 
-class MyObject implements IIdentifiable {
-  id: str;
-  key: str;
-  value: int;
-}
+class MyObject(IIdentifiable):
+  id: str
+  key: str
+  value: int
+
 ```
 
 The persistence component shall implement the following interface with a basic set of CRUD operations.

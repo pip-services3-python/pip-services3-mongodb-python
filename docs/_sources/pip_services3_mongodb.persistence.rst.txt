@@ -8,7 +8,7 @@ Submodules
    :maxdepth: 4
 
    pip_services3_mongodb.persistence.IdentifiableMongoDbPersistence
-   pip_services3_mongodb.persistence.MongoDbConnection
+   pip_services3_mongodb.persistence.MongoDbIndex
    pip_services3_mongodb.persistence.MongoDbPersistence
 
 Module contents

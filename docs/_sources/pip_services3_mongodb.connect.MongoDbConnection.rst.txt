@@ -1,0 +1,7 @@
+pip\_services3\_mongodb.connect.MongoDbConnection module
+========================================================
+
+.. automodule:: pip_services3_mongodb.connect.MongoDbConnection
+   :members:
+   :undoc-members:
+   :show-inheritance:
