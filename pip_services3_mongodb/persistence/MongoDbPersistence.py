@@ -10,7 +10,7 @@
 """
 import random
 import threading
-from typing import List, Any, Optional, TypeVar
+from typing import List, Any, Optional
 
 from pip_services3_commons.config import ConfigParams
 from pip_services3_commons.config import IConfigurable
@@ -25,8 +25,6 @@ from .MongoDbIndex import MongoDbIndex
 from ..connect.MongoDbConnectionResolver import MongoDbConnectionResolver
 
 filtered = filter
-
-T = TypeVar('T')  # Declare type variable
 
 
 class MongoDbPersistence(IReferenceable, IUnreferenceable, IConfigurable, IOpenable, ICleanable):
@@ -347,7 +345,7 @@ class MongoDbPersistence(IReferenceable, IUnreferenceable, IConfigurable, IOpena
 
         self._db.drop_collection(self._collection_name)
 
-    def create(self, correlation_id: Optional[str], item: T) -> T:
+    def create(self, correlation_id: Optional[str], item: Any) -> dict:
         """
         Creates a data item.
 
@@ -381,7 +379,7 @@ class MongoDbPersistence(IReferenceable, IUnreferenceable, IConfigurable, IOpena
         count = 0 if result is None else result.deleted_count
         self._logger.trace(correlation_id, "Deleted %d items from %s", count, self._collection_name)
 
-    def get_one_random(self, correlation_id: Optional[str], filter: Any) -> T:
+    def get_one_random(self, correlation_id: Optional[str], filter: Any) -> Optional[dict]:
         """
         Gets a random item from items that match to a given filter.
 
@@ -463,7 +461,7 @@ class MongoDbPersistence(IReferenceable, IUnreferenceable, IConfigurable, IOpena
         return DataPage(items, total)
 
     def get_list_by_filter(self, correlation_id: Optional[str], filter: Any,
-                           sort: Any = None, select: Any = None) -> List[T]:
+                           sort: Any = None, select: Any = None) -> List[dict]:
         """
         Gets a list of data items retrieved by a given filter and sorted according to sort parameters.
 

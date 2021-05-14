@@ -9,14 +9,12 @@
     :license: MIT, see LICENSE for more details.
 """
 from copy import deepcopy
-from typing import Any, TypeVar, Optional, List
+from typing import Any, Optional, List
 
 import pymongo
 from pip_services3_commons.data import AnyValueMap, IdGenerator
 
 from .MongoDbPersistence import MongoDbPersistence
-
-T = TypeVar('T')  # Declare type variable
 
 
 class IdentifiableMongoDbPersistence(MongoDbPersistence):
@@ -102,7 +100,7 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
         """
         return self._convert_from_public(value)
 
-    def get_list_by_ids(self, correlation_id: Optional[str], ids: List[Any]) -> List[T]:
+    def get_list_by_ids(self, correlation_id: Optional[str], ids: List[Any]) -> List[dict]:
         """
         Gets a list of data items retrieved by given unique ids.
 
@@ -115,7 +113,7 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
         filters = {'_id': {'$in': ids}}
         return self.get_list_by_filter(correlation_id, filters)
 
-    def get_one_by_id(self, correlation_id: Optional[str], id: Any) -> T:
+    def get_one_by_id(self, correlation_id: Optional[str], id: Any) -> dict:
         """
         Gets a data item by its unique id.
 
@@ -134,7 +132,7 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
         item = self._convert_to_public(item)
         return item
 
-    def create(self, correlation_id: Optional[str], item: T) -> T:
+    def create(self, correlation_id: Optional[str], item: Any) -> dict:
         """
         Creates a data item.
 
@@ -149,11 +147,11 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
 
         # Replace _id or generate a new one
         new_item.pop('_id', None)
-        new_item['_id'] = item['id'] if 'id' in item and item['id'] != None else IdGenerator.next_long()
+        new_item['_id'] = item['id'] if 'id' in item and item['id'] is not None else IdGenerator.next_long()
 
         return super().create(correlation_id, new_item)
 
-    def set(self, correlation_id: Optional[str], item: T) -> T:
+    def set(self, correlation_id: Optional[str], item: Any) -> dict:
         """
         Sets a data item. If the data item exists it updates it, otherwise it create a new data item.
 
@@ -184,7 +182,7 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
         item = self._convert_to_public(item)
         return item
 
-    def update(self, correlation_id: Optional[str], item: T) -> T:
+    def update(self, correlation_id: Optional[str], item: Any) -> Optional[dict]:
         """
         Updates a data item.
 
@@ -211,7 +209,7 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
         new_item = self._convert_to_public(result)
         return new_item
 
-    def update_partially(self, correlation_id: Optional[str], id: Any, data: AnyValueMap) -> T:
+    def update_partially(self, correlation_id: Optional[str], id: Any, data: AnyValueMap) -> dict:
         """
         Updates only few selected fields in a data item.
 
@@ -239,7 +237,7 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
         return item
 
     # The method must return deleted value to be able to do clean up like removing references
-    def delete_by_id(self, correlation_id: Optional[str], id: Any) -> T:
+    def delete_by_id(self, correlation_id: Optional[str], id: Any) -> dict:
         """
         Deleted a data item by it's unique id.
 
