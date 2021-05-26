@@ -5,6 +5,7 @@
 ### Bug Fixes
 * fix docs
 * fix private, protected method names
+* fixed returned types for operations
 
 ### Features
 * Moved MongoDbConnection to connect package

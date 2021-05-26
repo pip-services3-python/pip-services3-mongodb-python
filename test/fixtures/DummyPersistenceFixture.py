@@ -25,26 +25,26 @@ class DummyPersistenceFixture:
         # Create one dummy
         dummy1 = self._persistence.create(None, DUMMY1)
 
-        assert dummy1 != None
-        assert dummy1['id'] != None
-        assert DUMMY1['key'] == dummy1['key']
-        assert DUMMY1['content'] == dummy1['content']
+        assert dummy1 is not None
+        assert dummy1.id is not None
+        assert DUMMY1.key == dummy1.key
+        assert DUMMY1.content == dummy1.content
 
         # Create another dummy
         dummy2 = self._persistence.create(None, DUMMY2)
 
-        assert dummy2 != None
-        assert dummy2['id'] != None
-        assert DUMMY2['key'] == dummy2['key']
-        assert DUMMY2['content'] == dummy2['content']
+        assert dummy2 is not None
+        assert dummy2.id is not None
+        assert DUMMY2.key == dummy2.key
+        assert DUMMY2.content == dummy2.content
 
         # Get all dummies
         dummies = self._persistence.get_page_by_filter(None, None, None)
-        assert dummies != None
+        assert dummies is not None
         assert 2 == len(dummies.data)
 
         # Update the dummy
-        dummy1['content'] = "Updated Content 1";
+        dummy1.content = "Updated Content 1"
         dummy = self._persistence.update(
             None,
             dummy1
@@ -53,29 +53,29 @@ class DummyPersistenceFixture:
         # Partially update the dummy
         dummy = self._persistence.update_partially(
             None,
-            dummy1['id'],
+            dummy1.id,
             AnyValueMap.from_tuples(
-                'content', 'Partually Updated Content 1'
+                'content', 'Partially Updated Content 1'
             )
         )
 
-        assert dummy != None
-        assert dummy1['id'] == dummy['id']
-        assert dummy1['key'] == dummy['key']
-        assert "Partually Updated Content 1" == dummy['content']
+        assert dummy is not None
+        assert dummy1.id == dummy.id
+        assert dummy1.key == dummy.key
+        assert "Partially Updated Content 1" == dummy.content
 
         # Get the dummy by Id
-        result = self._persistence.get_one_by_id(None, dummy1['id'])
+        result = self._persistence.get_one_by_id(None, dummy1.id)
         assert result is not None
-        assert result['id'] == dummy1['id']
-        assert result['key'] == result['key']
+        assert result.id == dummy1.id
+        assert result.key == dummy1.key
 
         # Delete the dummy
-        self._persistence.delete_by_id(None, dummy1['id'])
+        self._persistence.delete_by_id(None, dummy1.id)
 
         # Try to get deleted dummy
-        dummy = self._persistence.get_one_by_id(None, dummy1['id'])
-        assert dummy == None
+        dummy = self._persistence.get_one_by_id(None, dummy1.id)
+        assert dummy is None
 
     def test_batch_operations(self):
         # Create dummies
@@ -83,14 +83,14 @@ class DummyPersistenceFixture:
         dummy2 = self._persistence.create(None, DUMMY2)
 
         # Get dummies
-        dummies = self._persistence.get_list_by_ids(None, [dummy1['id'], dummy2['id']])
-        assert dummies != None
+        dummies = self._persistence.get_list_by_ids(None, [dummy1.id, dummy2.id])
+        assert dummies is not None
         assert 2 == len(dummies)
 
         # Delete
-        self._persistence.delete_by_ids(None, [dummy1['id'], dummy2['id']])
+        self._persistence.delete_by_ids(None, [dummy1.id, dummy2.id])
 
         # Try to get deleted dummies
-        dummies = self._persistence.get_list_by_ids(None, [dummy1['id'], dummy2['id']])
-        assert dummies != None
+        dummies = self._persistence.get_list_by_ids(None, [dummy1.id, dummy2.id])
+        assert dummies is not None
         assert 0 == len(dummies)

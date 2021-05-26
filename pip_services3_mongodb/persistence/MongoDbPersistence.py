@@ -10,13 +10,15 @@
 """
 import random
 import threading
-from typing import List, Any, Optional
+from copy import deepcopy
+from typing import List, Any, Optional, TypeVar
 
 from pip_services3_commons.config import ConfigParams
 from pip_services3_commons.config import IConfigurable
 from pip_services3_commons.data import PagingParams, DataPage
 from pip_services3_commons.errors import ConnectionException
 from pip_services3_commons.refer import IReferenceable, DependencyResolver, IReferences, IUnreferenceable
+from pip_services3_commons.reflect import PropertyReflector, RecursiveObjectWriter, ObjectWriter
 from pip_services3_commons.run import IOpenable, ICleanable
 from pip_services3_components.log import CompositeLogger
 
@@ -25,6 +27,8 @@ from .MongoDbIndex import MongoDbIndex
 from ..connect.MongoDbConnectionResolver import MongoDbConnectionResolver
 
 filtered = filter
+
+T = TypeVar('T')  # Declare type variable
 
 
 class MongoDbPersistence(IReferenceable, IUnreferenceable, IConfigurable, IOpenable, ICleanable):
@@ -237,7 +241,8 @@ class MongoDbPersistence(IReferenceable, IUnreferenceable, IConfigurable, IOpena
         if value is None: return None
         value['id'] = value['_id']
         value.pop('_id', None)
-        return value
+
+        return type('object', (object,), value)
 
     def _convert_from_public(self, value: Any) -> Any:
         """
@@ -247,7 +252,9 @@ class MongoDbPersistence(IReferenceable, IUnreferenceable, IConfigurable, IOpena
 
         :return: converted object in internal format.
         """
-        return value
+        if isinstance(value, dict):
+            return value
+        return PropertyReflector.get_properties(value)
 
     def is_open(self) -> bool:
         """
@@ -345,7 +352,7 @@ class MongoDbPersistence(IReferenceable, IUnreferenceable, IConfigurable, IOpena
 
         self._db.drop_collection(self._collection_name)
 
-    def create(self, correlation_id: Optional[str], item: Any) -> dict:
+    def create(self, correlation_id: Optional[str], item: T) -> T:
         """
         Creates a data item.
 
@@ -356,7 +363,7 @@ class MongoDbPersistence(IReferenceable, IUnreferenceable, IConfigurable, IOpena
         :return: a created item
         """
         item = self._convert_from_public(item)
-        new_item = dict(item)
+        new_item = deepcopy(item)
 
         result = self._collection.insert_one(new_item)
         item = self._collection.find_one({'_id': result.inserted_id})
@@ -379,7 +386,7 @@ class MongoDbPersistence(IReferenceable, IUnreferenceable, IConfigurable, IOpena
         count = 0 if result is None else result.deleted_count
         self._logger.trace(correlation_id, "Deleted %d items from %s", count, self._collection_name)
 
-    def get_one_random(self, correlation_id: Optional[str], filter: Any) -> Optional[dict]:
+    def get_one_random(self, correlation_id: Optional[str], filter: Any) -> Optional[T]:
         """
         Gets a random item from items that match to a given filter.
 
@@ -461,7 +468,7 @@ class MongoDbPersistence(IReferenceable, IUnreferenceable, IConfigurable, IOpena
         return DataPage(items, total)
 
     def get_list_by_filter(self, correlation_id: Optional[str], filter: Any,
-                           sort: Any = None, select: Any = None) -> List[dict]:
+                           sort: Any = None, select: Any = None) -> List[T]:
         """
         Gets a list of data items retrieved by a given filter and sorted according to sort parameters.
 

@@ -8,10 +8,11 @@
     :copyright: Conceptual Vision Consulting LLC 2015-2016, see AUTHORS for more details.
     :license: MIT, see LICENSE for more details.
 """
+from pip_services3_commons.data import IStringIdentifiable
 
 
-class Dummy(dict):
+class Dummy(IStringIdentifiable):
     def __init__(self, id=None, key=None, content=None):
-        self['id'] = id
-        self['key'] = key
-        self['content'] = content
+        self.id = id
+        self.key = key
+        self.content = content

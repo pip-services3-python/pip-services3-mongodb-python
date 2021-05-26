@@ -12,7 +12,7 @@ import os
 from pip_services3_commons.config import ConfigParams
 
 from .DummyMongoDbPersistence import DummyMongoDbPersistence
-from ..DummyPersistenceFixture import DummyPersistenceFixture
+from test.fixtures.DummyPersistenceFixture import DummyPersistenceFixture
 
 
 class TestDummyMongoDbPersistence:

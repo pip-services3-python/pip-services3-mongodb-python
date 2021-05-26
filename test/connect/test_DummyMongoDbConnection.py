@@ -7,8 +7,8 @@ from pip_services3_commons.refer.Descriptor import Descriptor
 from pip_services3_commons.refer.References import References
 
 from pip_services3_mongodb.connect.MongoDbConnection import MongoDbConnection
-from .DummyMongoDbPersistence import DummyMongoDbPersistence
-from ..DummyPersistenceFixture import DummyPersistenceFixture
+from test.persistence.DummyMongoDbPersistence import DummyMongoDbPersistence
+from test.fixtures.DummyPersistenceFixture import DummyPersistenceFixture
 
 
 class TestDummyMongoDbConnection:
