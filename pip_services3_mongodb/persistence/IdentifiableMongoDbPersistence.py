@@ -93,6 +93,9 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
         """
         super(IdentifiableMongoDbPersistence, self).__init__(collection)
 
+        # Flag to turn on automated string ID generation
+        self._auto_generate_id: bool = True
+
     def _convert_from_public_partial(self, value: Any) -> Any:
         """
         Converts the given object from the public partial format.
@@ -148,8 +151,9 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
         new_item = dict(item)
 
         # Replace _id or generate a new one
-        new_item.pop('_id', None)
-        new_item['_id'] = item['id'] if 'id' in item and item['id'] is not None else IdGenerator.next_long()
+        new_item['_id'] = new_item.pop('id', None)
+        if new_item['_id'] is None and self._auto_generate_id:
+            new_item['_id'] = IdGenerator.next_long()
 
         return super().create(correlation_id, new_item)
 
@@ -167,8 +171,10 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
         new_item = dict(item)
 
         # Replace _id or generate a new one
-        new_item.pop('_id', None)
-        new_item['_id'] = item['id'] if 'id' in item and item['id'] is not None else IdGenerator.next_long()
+        new_item['_id'] = new_item.pop('id', None)
+        if new_item['_id'] is None and self._auto_generate_id:
+            new_item['_id'] = IdGenerator.next_long()
+
         _id = new_item['_id']
         new_item = self._convert_from_public(new_item)
 

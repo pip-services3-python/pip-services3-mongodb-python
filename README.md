@@ -22,14 +22,14 @@ The module contains the following packages:
 
 Install the Python package as
 ```bash
-pip install pip_services3_mongodb
+pip install pip-services3-mongodb
 ```
 
 As an example, lets create persistence for the following data object.
 
 ```python
 class Dummy(IStringIdentifiable):
-    def __init__(self, id=None, key=None, content=None):
+    def __init__(self, id: str = None, key: str = None, content: str = None):
         self.id = id
         self.key = key
         self.content = content
