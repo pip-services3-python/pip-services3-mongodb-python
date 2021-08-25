@@ -21,6 +21,7 @@ from pip_services3_commons.refer import IReferenceable, DependencyResolver, IRef
 from pip_services3_commons.reflect import PropertyReflector, RecursiveObjectWriter, ObjectWriter
 from pip_services3_commons.run import IOpenable, ICleanable
 from pip_services3_components.log import CompositeLogger
+from pymongo.collection import Collection
 
 from pip_services3_mongodb.connect.MongoDbConnection import MongoDbConnection
 from .MongoDbIndex import MongoDbIndex
@@ -138,7 +139,7 @@ class MongoDbPersistence(IReferenceable, IUnreferenceable, IConfigurable, IOpena
         # The MongoDb database object.
         self._db: Any = None
         # The MongoDb collection object.
-        self._collection: Any = None
+        self._collection: Collection = None
         # The MongoDB connection object.
         self._client: Any = None
         # The MongoDB connection component.
