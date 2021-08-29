@@ -2,9 +2,9 @@
 """
     pip_services3_mongodb.persistence.MongoDbPersistence
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    
+
     MongoDb persistence implementation
-    
+
     :copyright: Conceptual Vision Consulting LLC 2018-2019, see AUTHORS for more details.
     :license: MIT, see LICENSE for more details.
 """
@@ -21,7 +21,6 @@ from pip_services3_commons.refer import IReferenceable, DependencyResolver, IRef
 from pip_services3_commons.reflect import PropertyReflector, RecursiveObjectWriter, ObjectWriter
 from pip_services3_commons.run import IOpenable, ICleanable
 from pip_services3_components.log import CompositeLogger
-from pymongo.collection import Collection
 
 from pip_services3_mongodb.connect.MongoDbConnection import MongoDbConnection
 from .MongoDbIndex import MongoDbIndex
@@ -84,10 +83,10 @@ class MongoDbPersistence(IReferenceable, IUnreferenceable, IConfigurable, IOpena
                 return item
 
             def set(self, correlationId, item):
-                item = self._collection.find_one_and_update( 
-                    { '_id': item.id }, { '$set': item }, 
-                    return_document = pymongo.ReturnDocument.AFTER, 
-                    upsert = True 
+                item = self._collection.find_one_and_update(
+                    { '_id': item.id }, { '$set': item },
+                    return_document = pymongo.ReturnDocument.AFTER,
+                    upsert = True
                     )
 
         persistence = MyMongoDbPersistence()
@@ -132,14 +131,14 @@ class MongoDbPersistence(IReferenceable, IUnreferenceable, IConfigurable, IOpena
         self._logger: CompositeLogger = CompositeLogger()
 
         # The dependency resolver.
-        self._dependencyResolver = DependencyResolver(self.__default_config)
+        self._dependency_resolver = DependencyResolver(self.__default_config)
 
         # The MongoDB database name.
         self._database_name: str = None
         # The MongoDb database object.
         self._db: Any = None
         # The MongoDb collection object.
-        self._collection: Collection = None
+        self._collection: Any = None
         # The MongoDB connection object.
         self._client: Any = None
         # The MongoDB connection component.
@@ -167,7 +166,7 @@ class MongoDbPersistence(IReferenceable, IUnreferenceable, IConfigurable, IOpena
 
         self._logger.configure(config)
         self._connection_resolver.configure(config)
-        self._dependencyResolver.configure(config)
+        self._dependency_resolver.configure(config)
 
         self._max_page_size = config.get_as_integer_with_default("options.max_page_size", self._max_page_size)
         self._collection_name = config.get_as_string_with_default('collection', self._collection_name)
@@ -184,8 +183,8 @@ class MongoDbPersistence(IReferenceable, IUnreferenceable, IConfigurable, IOpena
         self._connection_resolver.set_references(references)
 
         # Get connection
-        self._dependencyResolver.set_references(references)
-        self._connection = self._dependencyResolver.get_one_required('connection')
+        self._dependency_resolver.set_references(references)
+        self._connection = self._dependency_resolver.get_one_optional('connection')
         # Or create a local one
         if self._connection is None:
             self._connection = self.__create_connection()
