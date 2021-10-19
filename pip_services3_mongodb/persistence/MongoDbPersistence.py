@@ -18,7 +18,7 @@ from pip_services3_commons.config import IConfigurable
 from pip_services3_commons.data import PagingParams, DataPage
 from pip_services3_commons.errors import ConnectionException
 from pip_services3_commons.refer import IReferenceable, DependencyResolver, IReferences, IUnreferenceable
-from pip_services3_commons.reflect import PropertyReflector, RecursiveObjectWriter, ObjectWriter
+from pip_services3_commons.reflect import PropertyReflector
 from pip_services3_commons.run import IOpenable, ICleanable
 from pip_services3_components.log import CompositeLogger
 

@@ -9,9 +9,8 @@
     :license: MIT, see LICENSE for more details.
 """
 
-__all__ = [ 'MongoDbPersistence', 'IdentifiableMongoDbPersistence' ]
+__all__ = ['MongoDbPersistence', 'IdentifiableMongoDbPersistence', 'MongoDbIndex']
 
-from .MongoDbPersistence import MongoDbPersistence
 from .IdentifiableMongoDbPersistence import IdentifiableMongoDbPersistence
-
-
+from .MongoDbIndex import MongoDbIndex
+from .MongoDbPersistence import MongoDbPersistence

@@ -7,5 +7,3 @@
 __all__ = ['DefaultMongoDbFactory']
 
 from .DefaultMongoDbFactory import DefaultMongoDbFactory
-
-

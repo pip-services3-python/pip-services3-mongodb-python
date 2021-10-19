@@ -9,8 +9,7 @@
     :license: MIT, see LICENSE for more details.
 """
 
-__all__ = ['MongoDbConnectionResolver']
+__all__ = ['MongoDbConnectionResolver', 'MongoDbConnection']
 
+from .MongoDbConnection import MongoDbConnection
 from .MongoDbConnectionResolver import MongoDbConnectionResolver
-
-

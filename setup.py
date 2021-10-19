@@ -23,7 +23,7 @@ from setuptools import find_packages
 
 setup(
     name='pip_services3_mongodb',
-    version='3.1.2',
+    version='3.1.3',
     url='http://github.com/pip-services3-python/pip-services3-mongodb-python',
     license='MIT',
     author='Conceptual Vision Consulting LLC',
@@ -36,7 +36,7 @@ setup(
     zip_safe=True,
     platforms='any',
     install_requires=[
-        'iso8601', 'PyYAML', 'pymongo', 'pip_services3_commons', 'pip_services3_components', 'pip_services3_data'
+        'pymongo', 'pip_services3_commons', 'pip_services3_components', 'pip_services3_data'
     ],
     classifiers=[
         'Development Status :: 4 - Beta',

@@ -91,7 +91,7 @@ class MongoDbConnectionResolver(IReferenceable, IConfigurable):
     def __compose_uri(self, connections: List[ConnectionParams], credential: CredentialParams) -> str:
         for connection in connections:
             uri = connection.get_uri()
-            if uri is not None:
+            if uri:
                 return uri
 
         hosts = ''
