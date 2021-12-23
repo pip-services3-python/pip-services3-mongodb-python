@@ -1,6 +1,6 @@
 pytest
-pymongo
+pymongo >= 4.0.1, < 5.0.0
 
-pip_services3_commons
-pip_services3_components
-pip_services3_data
+pip_services3_commons >= 3.3.10, < 4.0
+pip_services3_components >= 3.5.4, < 4.0
+pip_services3_data >= 3.2.3, < 4.0

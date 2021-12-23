@@ -18,12 +18,12 @@ try:
 except:
     readme = __doc__
 
-from setuptools import setup
 from setuptools import find_packages
+from setuptools import setup
 
 setup(
     name='pip_services3_mongodb',
-    version='3.1.3',
+    version='3.2.0',
     url='http://github.com/pip-services3-python/pip-services3-mongodb-python',
     license='MIT',
     author='Conceptual Vision Consulting LLC',
@@ -36,15 +36,17 @@ setup(
     zip_safe=True,
     platforms='any',
     install_requires=[
-        'pymongo', 'pip_services3_commons', 'pip_services3_components', 'pip_services3_data'
+        'pymongo >= 4.0.1, < 5.0.0',
+
+        'pip_services3_commons >= 3.3.10, < 4.0',
+        'pip_services3_components >= 3.5.4, < 4.0',
+        'pip_services3_data >= 3.2.3, < 4.0'
     ],
     classifiers=[
-        'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',

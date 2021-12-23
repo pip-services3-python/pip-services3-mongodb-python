@@ -280,7 +280,6 @@ class MongoDbPersistence(IReferenceable, IUnreferenceable, IConfigurable, IOpena
         uri = self._connection_resolver.resolve(correlation_id)
 
         max_pool_size = self._options.get_as_nullable_integer("max_pool_size")
-        keep_alive = self._options.get_as_nullable_boolean("keep_alive")
         connect_timeout = self._options.get_as_nullable_integer("connect_timeout")
         socket_timeout = self._options.get_as_nullable_integer("socket_timeout")
         auto_reconnect = self._options.get_as_nullable_boolean("auto_reconnect")
@@ -296,7 +295,6 @@ class MongoDbPersistence(IReferenceable, IUnreferenceable, IConfigurable, IOpena
             kwargs = {
                 'maxPoolSize': max_pool_size,
                 'connectTimeoutMS': connect_timeout,
-                'socketKeepAlive': keep_alive,
                 'socketTimeoutMS': socket_timeout,
                 'appname': correlation_id
             }

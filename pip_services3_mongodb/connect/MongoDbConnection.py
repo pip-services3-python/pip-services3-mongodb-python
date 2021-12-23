@@ -30,7 +30,6 @@ class MongoDbConnection(IReferenceable, IReferences, IOpenable):
           - password:                  (optional) user password
         - options:
           - max_pool_size:             (optional) maximum connection pool size (default: 2)
-          - keep_alive:                (optional) enable connection keep alive (default: true)
           - connect_timeout:           (optional) connection timeout in milliseconds (default: 5000)
           - socket_timeout:            (optional) socket timeout in milliseconds (default: 360000)
           - auto_reconnect:            (optional) enable auto reconnection (default: true)
@@ -53,7 +52,6 @@ class MongoDbConnection(IReferenceable, IReferences, IOpenable):
         """
         self.__default_config = ConfigParams.from_tuples(
             'options.max_pool_size', 2,
-            'options.keep_alive', 1,
             'options.connect_timeout', 5000,
             'options.auto_reconnect', True,
             'options.max_page_size', 100,
@@ -102,7 +100,6 @@ class MongoDbConnection(IReferenceable, IReferences, IOpenable):
 
     def __compose_settings(self) -> Any:
         max_pool_size = self._options.get_as_nullable_string('max_pool_size')
-        keep_alive = self._options.get_as_boolean('keep_alive')
         connection_timeout_ms = self._options.get_as_nullable_integer('connect_timeout')
         socket_timeout_ms = self._options.get_as_nullable_integer('socket_timeout')
         auto_reconnect = self._options.get_as_nullable_boolean('auto_reconnect')
@@ -117,7 +114,6 @@ class MongoDbConnection(IReferenceable, IReferences, IOpenable):
 
         settings = {
             'maxPoolSize': max_pool_size,
-            'socketKeepAlive': keep_alive,
             'connectTimeoutMS': connection_timeout_ms,
             'socketTimeoutMS': socket_timeout_ms,
         }
