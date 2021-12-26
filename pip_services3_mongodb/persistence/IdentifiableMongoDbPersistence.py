@@ -129,7 +129,7 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
         :return: data item by id.
         """
         item = self._collection.find_one({'_id': id})
-        if item is None:
+        if item:
             self._logger.trace(correlation_id, "Nothing found from %s with id = %s", self._collection_name, id)
         else:
             self._logger.trace(correlation_id, "Retrieved from %s with id = %s", self._collection_name, id)
@@ -147,6 +147,9 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
 
         :return: a created item
         """
+        if item is None:
+            return
+
         item = self._convert_from_public(item)
         new_item = dict(item)
 
@@ -167,6 +170,9 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
 
         :return: an updated item
         """
+        if item is None:
+            return
+
         item = self._convert_from_public(item)
         new_item = dict(item)
 
@@ -175,16 +181,15 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
         if new_item['_id'] is None and self._auto_generate_id:
             new_item['_id'] = IdGenerator.next_long()
 
-        _id = new_item['_id']
         new_item = self._convert_from_public(new_item)
 
-        item = self._collection.find_one_and_update(
-            {'_id': _id}, {'$set': new_item},
+        item = self._collection.find_one_and_replace(
+            {'_id': new_item['_id']}, new_item,
             return_document=pymongo.ReturnDocument.AFTER,
             upsert=True
         )
 
-        if item is not None:
+        if item:
             self._logger.trace(correlation_id, "Set in %s with id = %s", self._collection_name, item['id'])
 
         item = self._convert_to_public(item)
@@ -202,18 +207,18 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
         """
         if item is None or item.id is None:
             return
+
         new_item = deepcopy(item)
         new_item = self._convert_from_public(new_item)
-        _id = item.id
 
         result = self._collection.find_one_and_update(
-            {'_id': _id}, {'$set': new_item},
+            {'_id': item.id}, {'$set': new_item},
             return_document=pymongo.ReturnDocument.AFTER
         )
 
         new_item = self._convert_to_public(result)
 
-        self._logger.trace(correlation_id, "Updated in %s with id = %s", self._collection_name, new_item.id)
+        self._logger.trace(correlation_id, "Updated in %s with id = %s", self._collection_name, item.id)
 
         return new_item
 
@@ -229,9 +234,10 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
 
         :return: an updated item.
         """
-        new_item = data.get_as_object() if isinstance(data, AnyValueMap) else dict(data)
-        new_item.pop('_id', None)
-        new_item.pop('id', None)
+        if data is None or id is None:
+            return
+
+        new_item = data.get_as_object()
         new_item = self._convert_from_public_partial(new_item)
 
         item = self._collection.find_one_and_update(
@@ -259,8 +265,8 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
 
         self._logger.trace(correlation_id, "Deleted from %s with id = %s", self._collection_name, id)
 
-        item = self._convert_to_public(item)
-        return item
+        old_item = self._convert_to_public(item)
+        return old_item
 
     def delete_by_ids(self, correlation_id: Optional[str], ids: List[Any]):
         """

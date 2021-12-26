@@ -7,6 +7,7 @@ from pip_services3_commons.errors.ConnectionException import ConnectionException
 from pip_services3_commons.refer import IReferenceable, IReferences
 from pip_services3_commons.run.IOpenable import IOpenable
 from pip_services3_components.log.CompositeLogger import CompositeLogger
+from pymongo import database
 
 from pip_services3_mongodb.connect.MongoDbConnectionResolver import MongoDbConnectionResolver
 
@@ -65,11 +66,11 @@ class MongoDbConnection(IReferenceable, IReferences, IOpenable):
         # The configuration options.
         self._options: ConfigParams = ConfigParams()
         # The MongoDB connection object.
-        self._connection: Any = None
+        self._connection: pymongo.MongoClient = None
         # The MongoDB database name.
         self._database_name: str = None
         # The MongoDb database object.
-        self._db: Any = None
+        self._db: database.Database = None
 
     def configure(self, config: ConfigParams):
         """
@@ -181,10 +182,10 @@ class MongoDbConnection(IReferenceable, IReferences, IOpenable):
             raise ConnectionException(correlation_id, 'DISCONNECT_FAILED',
                                       'Disconnect from mongodb failed: ').with_cause(ex)
 
-    def get_connection(self) -> Any:
+    def get_connection(self) -> pymongo.MongoClient:
         return self._connection
 
-    def get_database(self) -> Any:
+    def get_database(self) -> database.Database:
         return self._db
 
     def get_database_name(self) -> str:
