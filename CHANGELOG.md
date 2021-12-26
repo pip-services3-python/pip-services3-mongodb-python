@@ -1,10 +1,14 @@
 # <img src="https://uploads-ssl.webflow.com/5ea5d3315186cf5ec60c3ee4/5edf1c94ce4c859f2b188094_logo.svg" alt="Pip.Services Logo" width="200"> <br/> MongoDB components for Python Changelog
 
-## <a name="3.2.1"></a> 3.2.1 (2021-12-27)
+## <a name="3.2.1-3.2.2"></a> 3.2.1-3.2.2 (2021-12-27)
 
 ### Features
 * Optimize code, added type hints
 * Updated CRUD operations for None values
+
+### Bug Fixes
+* Fixed is_open method
+* Fixed type hints
 
 ## <a name="3.2.0"></a> 3.2.0 (2021-12-20)
 

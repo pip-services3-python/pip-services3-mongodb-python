@@ -352,6 +352,7 @@ class MongoDbPersistence(IReferenceable, IUnreferenceable, IConfigurable, IOpena
             self._db = None
             self._client = None
 
+            self.__opened = False
             self._logger.debug(correlation_id, "Disconnected from mongodb database " + str(self._database_name))
         except Exception as ex:
             raise ConnectionException(None, 'DISCONNECT_FAILED', 'Disconnect from mongodb failed: ' + str(ex)) \
