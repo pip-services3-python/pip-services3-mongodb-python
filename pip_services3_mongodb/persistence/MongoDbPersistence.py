@@ -258,9 +258,9 @@ class MongoDbPersistence(IReferenceable, IUnreferenceable, IConfigurable, IOpena
 
         value = PropertyReflector.get_properties(value)
 
-        if value.get('_id'):
-            value['id'] = value['_id']
-            value.pop('_id', None)
+        if value.get('id'):
+            value['_id'] = value.get('id') or value.get('_id')
+            value.pop('id', None)
         return value
 
     def is_open(self) -> bool:

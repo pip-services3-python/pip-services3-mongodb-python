@@ -151,10 +151,9 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
             return
 
         item = self._convert_from_public(item)
-        new_item = dict(item)
+        new_item = deepcopy(item)
 
         # Replace _id or generate a new one
-        new_item['_id'] = new_item.pop('id', None)
         if new_item['_id'] is None and self._auto_generate_id:
             new_item['_id'] = IdGenerator.next_long()
 
@@ -177,7 +176,6 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
         new_item = dict(item)
 
         # Replace _id or generate a new one
-        new_item['_id'] = new_item.pop('id', None)
         if new_item['_id'] is None and self._auto_generate_id:
             new_item['_id'] = IdGenerator.next_long()
 
@@ -189,10 +187,11 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
             upsert=True
         )
 
-        if item:
-            self._logger.trace(correlation_id, "Set in %s with id = %s", self._collection_name, item['id'])
-
         item = self._convert_to_public(item)
+
+        if item:
+            self._logger.trace(correlation_id, "Set in %s with id = %s", self._collection_name, item.id)
+
         return item
 
     def update(self, correlation_id: Optional[str], item: T) -> Optional[T]:
