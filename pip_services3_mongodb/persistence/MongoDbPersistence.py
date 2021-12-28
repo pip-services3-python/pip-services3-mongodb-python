@@ -421,8 +421,8 @@ class MongoDbPersistence(IReferenceable, IUnreferenceable, IConfigurable, IOpena
         pos = random.randint(0, count)
 
         statement = self._collection.find(filter).skip(pos if pos > 0 else 0).limit(1)
-        for item in statement:
 
+        for item in statement:
             if item is None:
                 self._logger.trace(correlation_id, "Random item wasn't found from %s", self._collection_name)
             else:
@@ -456,15 +456,13 @@ class MongoDbPersistence(IReferenceable, IUnreferenceable, IConfigurable, IOpena
         paging_enabled = paging.total
 
         # Configure statement
-        statement = self._collection.find(filter)
+        statement = self._collection.find(filter, projection=select or {})
 
         if skip >= 0:
             statement = statement.skip(skip)
         statement = statement.limit(take)
         if sort is not None:
             statement = statement.sort(sort)
-        if select is not None:
-            statement = statement.select(select)
 
         # Retrive page items
         items = []
@@ -501,12 +499,10 @@ class MongoDbPersistence(IReferenceable, IUnreferenceable, IConfigurable, IOpena
         :return: a data list of results by filter.
         """
         # Configure statement
-        statement = self._collection.find(filter)
+        statement = self._collection.find(filter, projection=select or {})
 
         if sort is not None:
             statement = statement.sort(sort)
-        if select is not None:
-            statement = statement.select(select)
 
         # Retrive page items
         items = []
