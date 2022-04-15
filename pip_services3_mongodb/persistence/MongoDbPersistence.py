@@ -401,7 +401,7 @@ class MongoDbPersistence(IReferenceable, IUnreferenceable, IConfigurable, IOpena
 
         :param filter: (optional) a filter function to filter items.
         """
-        result = self._collection.delete_many(filter)
+        result = self._collection.delete_many(filter or {})
         count = 0 if result is None else result.deleted_count
         self._logger.trace(correlation_id, "Deleted %d items from %s", count, self._collection_name)
 
@@ -416,7 +416,7 @@ class MongoDbPersistence(IReferenceable, IUnreferenceable, IConfigurable, IOpena
 
         :return: a random item.
         """
-        count = self._collection.count_documents(filter)
+        count = self._collection.count_documents(filter or {})
 
         pos = random.randint(0, count)
 
@@ -454,6 +454,7 @@ class MongoDbPersistence(IReferenceable, IUnreferenceable, IConfigurable, IOpena
         skip = paging.get_skip(-1)
         take = paging.get_take(self._max_page_size)
         paging_enabled = paging.total
+        filter = filter or {}
 
         # Configure statement
         statement = self._collection.find(filter, projection=select or {})
@@ -499,6 +500,7 @@ class MongoDbPersistence(IReferenceable, IUnreferenceable, IConfigurable, IOpena
         :return: a data list of results by filter.
         """
         # Configure statement
+        filter = filter or {}
         statement = self._collection.find(filter, projection=select or {})
 
         if sort is not None:
@@ -526,6 +528,7 @@ class MongoDbPersistence(IReferenceable, IUnreferenceable, IConfigurable, IOpena
         :param filter: (optional) a filter JSON object
         :return: a number of filtered items.
         """
+        filter = filter or {}
         count = self._collection.count_documents(filter)
 
         if count is not None:

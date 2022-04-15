@@ -154,7 +154,7 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
         new_item = deepcopy(item)
 
         # Replace _id or generate a new one
-        if new_item['_id'] is None and self._auto_generate_id:
+        if new_item.get('_id') is None and self._auto_generate_id:
             new_item['_id'] = IdGenerator.next_long()
 
         return super().create(correlation_id, new_item)
@@ -176,7 +176,7 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
         new_item = dict(item)
 
         # Replace _id or generate a new one
-        if new_item['_id'] is None and self._auto_generate_id:
+        if new_item.get('_id') is None and self._auto_generate_id:
             new_item['_id'] = IdGenerator.next_long()
 
         new_item = self._convert_from_public(new_item)
