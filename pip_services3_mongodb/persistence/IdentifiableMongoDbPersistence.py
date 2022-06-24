@@ -79,7 +79,7 @@ class IdentifiableMongoDbPersistence(MongoDbPersistence):
         persistence.create("123", { id: "1", name: "ABC" })
         mydata = persistence.get_page_by_filter("123", FilterParams.from_tuples("name", "ABC"), None, None)
 
-        print mydata
+        print(mydata)
 
         persistence.delete_by_id("123", "1")
         # ...

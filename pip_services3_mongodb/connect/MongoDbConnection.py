@@ -150,8 +150,6 @@ class MongoDbConnection(IReferenceable, IReferences, IOpenable):
             uri = self._connection_resolver.resolve(correlation_id)
             settings = self.__del_none_objects(settings)
             client = pymongo.MongoClient(uri, **settings)
-            print("uriuriuriuriuriuriuriuri")
-            print(uri)
             self._connection = client
             self._db = client.get_database()
             self._database_name = self._db.name
