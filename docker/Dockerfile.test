@@ -3,6 +3,9 @@ FROM python:3.10
 # set working directory
 WORKDIR /usr/src/app
 
+# install git for adding dependecies from git
+RUN apt-get update && apt-get -y install git
+
 # copy project file
 COPY requirements.txt .
 
@@ -13,4 +16,4 @@ RUN pip install -r requirements.txt
 COPY . .
 
 # run test
-CMD [ "python", "./test.py" ]
+CMD python ./test.py

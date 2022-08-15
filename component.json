@@ -1,6 +1,14 @@
 {
-    "name": "pip_services3_mongodb",
-    "registry": "pipdevs",
+    "name":  "pip_services3_mongodb",
+    "type": "module",
+    "language": "python",
     "version": "3.2.4",
-    "build": 0
+    "build": 0,
+    "registry": "pipdevs",
+    "artifacts": [
+        {
+            "name":  "<name>",
+            "type": "pypi"
+        }
+    ]
 }
