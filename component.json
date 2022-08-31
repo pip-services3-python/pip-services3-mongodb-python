@@ -1,5 +1,5 @@
 {
-    "name":  "pip_services3_mongodb",
+    "name":  "pip-services3-mongodb",
     "type": "module",
     "language": "python",
     "version": "3.2.4",
