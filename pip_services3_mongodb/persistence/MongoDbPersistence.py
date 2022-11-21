@@ -239,7 +239,7 @@ class MongoDbPersistence(IReferenceable, IUnreferenceable, IConfigurable, IOpena
         :return: converted object in public format.
         """
         if value is None: return None
-        if value.get('_id'):
+        if '_id' in value.keys():
             value['id'] = value['_id']
             value.pop('_id', None)
 
@@ -258,7 +258,7 @@ class MongoDbPersistence(IReferenceable, IUnreferenceable, IConfigurable, IOpena
 
         value = PropertyReflector.get_properties(value)
 
-        if value.get('id'):
+        if 'id' in value.keys():
             value['_id'] = value.get('id') or value.get('_id')
             value.pop('id', None)
         return value

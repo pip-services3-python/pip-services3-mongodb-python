@@ -2,7 +2,7 @@
     "name":  "pip-services3-mongodb",
     "type": "module",
     "language": "python",
-    "version": "3.2.4",
+    "version": "3.2.5",
     "build": 0,
     "registry": "pipdevs",
     "artifacts": [

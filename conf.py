@@ -20,7 +20,7 @@ import sphinx_rtd_theme
 # -- Project information -----------------------------------------------------
 
 project = 'pip-services3-mongodb'
-copyright = '2020, Sergey Seroukhov'
+copyright = '2022, Sergey Seroukhov'
 author = 'Sergey Seroukhov'
 
 
