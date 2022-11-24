@@ -2,7 +2,7 @@
 from typing import Any, Optional
 
 import pymongo
-from pip_services3_commons.config import ConfigParams
+from pip_services3_commons.config import ConfigParams, IConfigurable
 from pip_services3_commons.errors.ConnectionException import ConnectionException
 from pip_services3_commons.refer import IReferenceable, IReferences
 from pip_services3_commons.run.IOpenable import IOpenable
@@ -12,7 +12,7 @@ from pymongo import database
 from pip_services3_mongodb.connect.MongoDbConnectionResolver import MongoDbConnectionResolver
 
 
-class MongoDbConnection(IReferenceable, IReferences, IOpenable):
+class MongoDbConnection(IReferenceable, IConfigurable, IOpenable):
     """
     MongoDB connection using plain driver.
 
